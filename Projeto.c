@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <windows.h>
 
-
 void gotoxy(int x, int y)
 {
   COORD coord;
@@ -54,8 +53,10 @@ void telaLogin()
 	// Colocando o gets() ao lado dos campos de usuario e senha
 	gotoxy(13,3);
 	gets(user);
+	setbuf(stdin,NULL);
 	gotoxy(11,4);
 	gets(senha);
+	setbuf(stdin,NULL);
 
 }
 int main()
