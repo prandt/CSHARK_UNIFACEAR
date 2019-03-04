@@ -17,7 +17,7 @@ void waiting(){
 	gotoxy(10,3);
 	for(i=0;i<3;i++){
 		printf(".");
-		Sleep(1000);
+		Sleep(500);
 	}
 	system("cls");
 }
@@ -26,24 +26,18 @@ void telaLogin()
 	char user[15];
 	char senha[99];
 	//Desenhando as linhas
-	int i = 0;
-	gotoxy(3,1);
-	for(i=0;i<10;i++)
-	{
-		printf("***");
-	}
-	gotoxy(3,6);
-	for(i=0;i<10;i++)
-	{
-		printf("***");
-	}
-	for(i=1;i<=5;i++){
-		gotoxy(3,i);
-		printf("*");
-	}
-	for(i=1;i<=5;i++){
-		gotoxy(32,i);
-		printf("*");
+	int i = 0, y = 0;
+	for( i = 0; i <= 20; i ++ ){
+		gotoxy(3+i,1);
+		printf("*********");
+		for( y = 1; y <= 5; y++ ){
+			gotoxy(3,y);
+			printf("*");
+			gotoxy(31,y);
+			printf("*");
+		}
+		gotoxy(3+i,6);
+		printf("*********");
 	}
 	// Colocando os campos de usuario e senha
 	gotoxy(5,3);
@@ -57,7 +51,6 @@ void telaLogin()
 	gotoxy(11,4);
 	gets(senha);
 	setbuf(stdin,NULL);
-
 }
 int main()
 {	
