@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <windows.h>
+#include <conio.h>
 
 void gotoxy(int x, int y)
 {
@@ -7,6 +8,10 @@ void gotoxy(int x, int y)
   coord.X = x;
   coord.Y = y;
   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+void arte_CSHARK()
+{
+
 }
 // Tela de aguardando
 void waiting(){
@@ -23,6 +28,7 @@ void waiting(){
 }
 void telaLogin()
 {
+	system("cls");
 	char user[15];
 	char senha[99];
 	//Desenhando as linhas
@@ -51,11 +57,87 @@ void telaLogin()
 	gotoxy(11,4);
 	gets(senha);
 	setbuf(stdin,NULL);
+	waiting();
+}
+void menuPrincipal(){
+	char key;
+	int keyValue;
+	int valor=1;
+	gotoxy(5,3);
+	printf(">> Cadastrar");
+	gotoxy(4,4);
+	printf("Entrar");
+	gotoxy(4,5);
+	printf("Sair");
+	do{
+		key = getch();
+		keyValue = key;
+		switch(keyValue){
+			// Pressionou para cima
+			case 72:{
+				if(valor > 1 && valor <= 3){
+					valor--;
+				}		
+				break;
+			}
+			// Pressionou para baixo
+			case 80:{
+				if(valor >= 1 && valor < 3){
+					valor++;	
+				}
+				break;
+			}
+			case 13:{
+				if(valor==1){
+					
+				}
+				if(valor==2){
+					telaLogin();
+				}
+				if(valor==3){
+					exit(0);
+				}
+				break;
+			}
+			default:{
+				break;
+			}	
+		}
+		if(valor==1)
+		{
+			system("cls");
+			gotoxy(5,3);
+			printf(">> Cadastrar");
+			gotoxy(4,4);
+			printf("Entrar");
+			gotoxy(4,5);
+			printf("Sair");
+		}
+		else if(valor==2)
+		{
+			system("cls");
+			gotoxy(4,3);
+			printf("Cadastrar");
+			gotoxy(5,4);
+			printf(">> Entrar");
+			gotoxy(4,5);
+			printf("Sair");
+		}
+		else if(valor==3)
+		{
+			system("cls");
+			gotoxy(4,3);
+			printf("Cadastrar");
+			gotoxy(4,4);
+			printf("Entrar");
+			gotoxy(5,5);
+			printf(">> Sair");
+		}
+	}while(1);		
 }
 int main()
 {	
-	waiting();
-	telaLogin();
+	menuPrincipal();
 	printf("\n\n");
 	system("pause");
 	return 0;
