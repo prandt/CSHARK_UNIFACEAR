@@ -82,7 +82,23 @@ int listarUsuario(char user[15], char password[99]){
 }
 void arte_CSHARK()
 {
-
+	//Desenhando as linhas
+	int i = 0, y = 0;
+	for( i = 0; i < 20; i ++ ){
+		gotoxy(3+i,1);
+		colorir(1,0);
+		printf("####################");
+		for( y = 1; y <= 15; y++ ){
+			gotoxy(3,y);
+			printf("#");
+			gotoxy(41,y);
+			printf("#");
+		}
+		gotoxy(3+i,15);
+		printf("####################");
+		colorir(15,0);
+	}
+	Sleep(20);
 }
 // Colorir
 void colorir(int F, int B) {
@@ -141,7 +157,6 @@ void telaLogin()
 	gets(senha);
 	setbuf(stdin,NULL);
 	colorir(15,0);
-	
 	int valor = listarUsuario(user,senha);
 	if(valor==1){
 		printf("\n\n\n\n\n existe kkk");
@@ -155,12 +170,12 @@ void telaLogin()
 		colorir(15,0);
 		pause(5,10);
 	}
-	
+	system("cls");
+	arte_CSHARK();
 }
 // Tela de caadastro
 void menuCadasto(){
 	system("cls");
-	
 	int i, y;
 	char user[15];
 	char senha[3];
@@ -295,22 +310,33 @@ void menuCadasto(){
 			colorir(15,0);
 		}
 	}
-	
+	system("cls");
+	arte_CSHARK();
+}
+void limpaTela(){
+	gotoxy(4,9);
+	printf("		              ");
+	gotoxy(4,10);
+	printf("       		       ");
+	gotoxy(4,11);
+	printf("            		  ");
 }
 // Tela com o menu principal
 void menuPrincipal(){
+	system("cls");
+	arte_CSHARK();
 	char key;
 	int keyValue;
 	// Pos representa a posição do item selecionado
 	int pos=1;
-	gotoxy(5,3);
-	colorir(2,0);
-	printf(">> Cadastrar");
+	gotoxy(5,9);
+	colorir(4,0);
+	printf("		>> Cadastrar");
 	colorir(15,0);
-	gotoxy(4,4);
-	printf("Entrar");
-	gotoxy(4,5);
-	printf("Sair");
+	gotoxy(4,10);
+	printf("		Entrar");
+	gotoxy(4,11);
+	printf("		Sair");
 	do{
 		key = getch();
 		keyValue = key;
@@ -356,38 +382,38 @@ void menuPrincipal(){
 		}
 		if(pos==1)
 		{
-			system("cls");
-			gotoxy(5,3);
-			colorir(2,0);
-			printf(">> Cadastrar");
+			limpaTela();
+			gotoxy(4,9);
+			colorir(4,0);
+			printf("		>> Cadastrar");
 			colorir(15,0);
-			gotoxy(4,4);
-			printf("Entrar");
-			gotoxy(4,5);
-			printf("Sair");
+			gotoxy(5,10);
+			printf("		Entrar");
+			gotoxy(5,11);
+			printf("		Sair");
 		}
 		else if(pos==2)
 		{
-			system("cls");
-			gotoxy(4,3);
-			printf("Cadastrar");
-			gotoxy(5,4);
-			colorir(2,0);
-			printf(">> Entrar");
+			limpaTela();
+			gotoxy(5,9);
+			printf("		Cadastrar");
+			gotoxy(4,10);
+			colorir(4,0);
+			printf("		>> Entrar");
 			colorir(15,0);
-			gotoxy(4,5);
-			printf("Sair");
+			gotoxy(5,11);
+			printf("		Sair");
 		}
 		else if(pos==3)
 		{
-			system("cls");
-			gotoxy(4,3);
-			printf("Cadastrar");
-			gotoxy(4,4);
-			printf("Entrar");
-			gotoxy(5,5);
-			colorir(2,0);
-			printf(">> Sair");
+			limpaTela();
+			gotoxy(5,9);
+			printf("		Cadastrar");
+			gotoxy(5,10);
+			printf("		Entrar");
+			gotoxy(4,11);
+			colorir(4,0);
+			printf("		>> Sair");
 			colorir(15,0);
 		}
 	}while(1);		
