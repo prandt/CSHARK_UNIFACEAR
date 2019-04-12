@@ -1,7 +1,20 @@
+/******************************************
+* Autores: Richard Prandt && André Souza  *
+* Matéria: Projeto Integrador I           *
+* Turma: ANSI-2                           *
+* Versão: 0.0.1                           *
+* Instituição: Unifacaer                  *
+*                                         *
+*******************************************/
 #include <stdio.h>
+#include <stdlib.h>
 #include <windows.h>
+#include <string.h>
 #include <conio.h>
 
+// Variaveis 
+char matriz[5][5];
+char nomeUsuario[20];
 // Alinhas os quadros
 void gotoxy(int x, int y)
 {
@@ -9,6 +22,20 @@ void gotoxy(int x, int y)
   coord.X = x;
   coord.Y = y;
   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+// Colorir
+void colorir(int F, int B) {
+	WORD wColor = ((B & 0x0F) << 4) + (F & 0x0F);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), wColor);
+}
+// limpaTela menus // Gambirara kkkk
+void limpaTela(){
+	gotoxy(7,9);
+	printf(" 	                    ");
+	gotoxy(7,10);
+	printf("        	           ");
+	gotoxy(7,11);
+	printf("            		   ");
 }
 // Função para deixar o software pausado
 void pause(int x, int y){
@@ -20,6 +47,25 @@ void pause(int x, int y){
 		key = getch();
 		keyValue = key;
 	}while(keyValue!=13);
+}
+void arte_CSHARK(int cor)
+{
+	//Desenhando as linhas
+	int i = 0, y = 0;
+	colorir(cor,0);
+	for( i = 0; i < 38; i ++ ){
+		gotoxy(3+i,1);
+		printf("*");
+		for( y = 1; y <= 15; y++ ){
+			gotoxy(3,y);
+			printf("*");
+			gotoxy(41,y);
+			printf("*");
+		}
+		gotoxy(3+i,15);
+		printf("*");
+	}
+	colorir(15,0);
 }
 // Função para gravar e ler o txt
 FILE* abrirArquivo(char modo, char caminho[30]){
@@ -46,6 +92,157 @@ FILE* abrirArquivo(char modo, char caminho[30]){
 void fechaArquivo(FILE *arquivo){
 	fclose(arquivo);
 }
+// Função para mostrar nome e pontuação na parte superior do jogo
+void topBar(){
+	int i,y;
+	colorir(2,0);
+	for( i=0; i < 35; i++ ){
+		gotoxy(50+i,2);
+		printf("*");
+		for( y=1; y <= 10; y++ ){
+			gotoxy(50,2+y);
+			printf("*");
+			gotoxy(84,2+y);
+			printf("*");
+		}
+		gotoxy(50+i,13);
+		printf("*");
+	}
+	colorir(15,0);
+	gotoxy(52,3);
+	printf("Nome: ");colorir(5,0);printf("%s",nomeUsuario);colorir(15,0);
+	gotoxy(52,5);
+	printf("Pontos:");
+	gotoxy(52,7);
+	printf("Vidas: ");
+	gotoxy(52,9);
+	printf("Chaves: 0|2");
+	gotoxy(52,11);
+	printf("Portas: 0|1");
+	/*int cont=0;
+	while(cont<5000){
+		gotoxy(60,9);
+		printf("%d",cont);
+		Sleep(1000);
+		cont++;
+	}*/
+}
+void tabuleiro(char matriz [5][5]){
+	gotoxy(4,25);
+	colorir(9,4);
+	printf("AVISO:");
+	colorir(15,0);
+	printf(" Pressione ESC para voltar ao menu");
+	// FODASSE
+	gotoxy(4,3);
+	printf ("\t###############################\n");
+	gotoxy(4,4);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,5);
+	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[0][0],matriz[0][1],matriz[0][2],matriz[0][3],matriz[0][4]);
+	gotoxy(4,6);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,7);
+	printf ("\t###############################\n");
+	gotoxy(4,8);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,9);
+	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[1][0],matriz[1][1],matriz[1][2],matriz[1][3],matriz[1][4]);
+	gotoxy(4,10);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,11);
+	printf ("\t###############################\n");
+	gotoxy(4,12);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,13);
+	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[2][0],matriz[2][1],matriz[2][2],matriz[2][3],matriz[2][4]);
+	gotoxy(4,14);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,15);
+	printf ("\t###############################\n");
+	gotoxy(4,16);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,17);
+	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[3][0],matriz[3][1],matriz[3][2],matriz[3][3],matriz[3][4]);
+	gotoxy(4,18);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,19);
+	printf ("\t###############################\n");
+	gotoxy(4,20);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,21);
+	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[4][0],matriz[4][1],matriz[4][2],matriz[4][3],matriz[4][4]);
+	gotoxy(4,22);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,23);
+	printf ("\t###############################\n");
+} 
+// função para
+void movimenta(int x, int y){
+	matriz[x][y] = 'C';
+	tabuleiro(matriz);
+}
+void jogar(){
+	topBar();
+	int x = 4;
+	int y = 4;
+	char casas [5] [5] = { {' ',' ',' ',' ',' '},
+						   {' ',' ',' ',' ',' '},
+						   {' ',' ',' ',' ',' '},
+						   {' ',' ',' ',' ',' '},
+						   {' ',' ',' ',' ','C'},	};
+	tabuleiro(casas);
+	
+	char tecla;
+	int TCPressionada, sair = 0;
+	do{
+		tecla = getch();
+		TCPressionada = tecla;
+		switch(TCPressionada){
+			case 75:
+					matriz[x][y] = 'x';
+					y -= 1;
+					if ((y < 0) || (y > 4)){
+						y += 1;
+					}
+					movimenta(x,y); //Seta para esquerda
+					break;
+				case 72:
+					matriz[x][y] = 'x';
+					x -= 1;
+					if ((x < 0 ) || (x > 4)){
+						x += 1;
+						
+					}
+					movimenta(x,y); //Seta para cima
+					break;
+				case 77:
+					matriz[x][y] = 'x';
+					y += 1;
+					if ((y < 0) || (y > 4)){
+						y -= 1;
+						
+					}
+					movimenta(x,y); //Seta para direita
+					break;
+				case 80:
+					matriz[x][y] = 'x';
+					x += 1;
+					if ((x < 0 ) || (x > 4)){
+						x -= 1;
+					}
+					movimenta(x,y); //Seta para baixo
+					break;
+				case 27:{
+					system("cls");
+					sair=3;
+					arte_CSHARK(3);
+					break;
+				}
+			}
+		
+	}while(1 && sair!=3);
+}
 // Salvar dados do usuário
 void salvarUsuario(char nome[15], char senha[99]){
 	FILE *arquivo;
@@ -70,6 +267,7 @@ int listarUsuario(char user[15], char password[99]){
 	while(!feof(arquivo)){
 		fscanf(arquivo,"%s %s 0 ",nome,senha);
 		if(strcmp(user,nome) == 0 && strcmp(senha,password) == 0) {
+			strcpy(nomeUsuario,nome);
 			valor =  1;
 			break;
 		}
@@ -79,31 +277,6 @@ int listarUsuario(char user[15], char password[99]){
 	}
 	fechaArquivo(arquivo);	
 	return valor;
-}
-void arte_CSHARK()
-{
-	//Desenhando as linhas
-	int i = 0, y = 0;
-	for( i = 0; i < 20; i ++ ){
-		gotoxy(3+i,1);
-		colorir(1,0);
-		printf("####################");
-		for( y = 1; y <= 15; y++ ){
-			gotoxy(3,y);
-			printf("#");
-			gotoxy(41,y);
-			printf("#");
-		}
-		gotoxy(3+i,15);
-		printf("####################");
-		colorir(15,0);
-	}
-	Sleep(20);
-}
-// Colorir
-void colorir(int F, int B) {
-	WORD wColor = ((B & 0x0F) << 4) + (F & 0x0F);
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), wColor);
 }
 // Mostra barra de progresso
 void loading(){
@@ -117,13 +290,103 @@ void loading(){
 	gotoxy(17,2);
 	for( i=0;i<=9;i++ ){
 		printf("#");
-		Sleep(350);		
+		Sleep(150);		
 	}
 	colorir(15,0);
+	system("cls");
+}
+
+void menuSecundario(){
+	system("cls");
+	arte_CSHARK(3);
+	char key;
+	int keyValue;
+	// Pos representa a posição do item selecionado
+	int pos=1, sair=0;
+	gotoxy(5,9);
+	colorir(4,0);
+	printf("		>> Jogar");
+	colorir(15,0);
+	gotoxy(4,10);
+	printf("		Ranking");
+	gotoxy(4,11);
+	printf("		Voltar");
+	do{
+		key = getch();
+		keyValue = key;
+		switch(keyValue){
+			// Pressionou para cima
+			case 72:{
+				if(pos > 1 && pos <= 3){
+					pos--;
+				}		
+				break;
+			}
+			// Pressionou para baixo
+			case 80:{
+				if(pos >= 1 && pos < 3){
+					pos++;	
+				}
+				break;
+			}
+			case 13:{
+				if(pos==1){
+					system("cls");
+					loading();
+					jogar();
+				}
+				if(pos==2){
+					
+				}
+				if(pos==3){
+					sair=3;
+				}
+				break;
+			}
+			default:{
+				break;
+			}	
+		}
+		if(pos==1)
+		{
+			limpaTela();
+			gotoxy(4,9);
+			colorir(4,0);
+			printf("		>> Jogar");
+			colorir(15,0);
+			gotoxy(5,10);
+			printf("		Ranking");
+			gotoxy(5,11);
+			printf("		Voltar");
+		}
+		else if(pos==2)
+		{
+			limpaTela();
+			gotoxy(5,9);
+			printf("		Jogar");
+			gotoxy(4,10);
+			colorir(4,0);
+			printf("		>> Ranking");
+			colorir(15,0);
+			gotoxy(5,11);
+			printf("		Voltar");
+		}
+		else if(pos==3)
+		{
+			limpaTela();
+			gotoxy(5,9);
+			printf("		Jogar");
+			gotoxy(5,10);
+			printf("		Ranking");
+			gotoxy(4,11);
+			colorir(4,0);
+			printf("		>> Voltar");
+			colorir(15,0);
+		}
+	}while(1 && sair!=3);
 }
 // Tela de login
-void telaLogin()
-{
+void telaLogin(){
 	system("cls");
 	char user[15];
 	char senha[99];
@@ -143,6 +406,7 @@ void telaLogin()
 		printf("*********");
 		colorir(15,0);
 	}
+	
 	// Colocando os campos de usuario e senha
 	gotoxy(5,3);
 	printf("Usuario: ");	
@@ -157,11 +421,12 @@ void telaLogin()
 	gets(senha);
 	setbuf(stdin,NULL);
 	colorir(15,0);
+	// Logar
 	int valor = listarUsuario(user,senha);
 	if(valor==1){
-		printf("\n\n\n\n\n existe kkk");
-		loading();
+		system("cls");
 		// abrir o jogo
+		menuSecundario();
 	}
 	else {
 		gotoxy(5,8);
@@ -171,7 +436,7 @@ void telaLogin()
 		pause(5,10);
 	}
 	system("cls");
-	arte_CSHARK();
+	arte_CSHARK(2);
 }
 // Tela de caadastro
 void menuCadasto(){
@@ -311,20 +576,12 @@ void menuCadasto(){
 		}
 	}
 	system("cls");
-	arte_CSHARK();
-}
-void limpaTela(){
-	gotoxy(4,9);
-	printf("		              ");
-	gotoxy(4,10);
-	printf("       		       ");
-	gotoxy(4,11);
-	printf("            		  ");
+	arte_CSHARK(2);
 }
 // Tela com o menu principal
 void menuPrincipal(){
 	system("cls");
-	arte_CSHARK();
+	arte_CSHARK(2);
 	char key;
 	int keyValue;
 	// Pos representa a posição do item selecionado
@@ -416,10 +673,12 @@ void menuPrincipal(){
 			printf("		>> Sair");
 			colorir(15,0);
 		}
-	}while(1);		
+	}while(1);
+			
 }
 int main()
 {	
+	system("MODE CON: COLS=100 LINES=100");
 	menuPrincipal();
 	return 0;
 }
