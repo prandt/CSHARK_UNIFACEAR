@@ -48,11 +48,11 @@ void pause(int x, int y){
 		keyValue = key;
 	}while(keyValue!=13);
 }
-void arte_CSHARK(int cor)
+void arte_CSHARK()
 {
 	//Desenhando as linhas
 	int i = 0, y = 0;
-	colorir(cor,0);
+	colorir(11,0);
 	for( i = 0; i < 38; i ++ ){
 		gotoxy(3+i,1);
 		printf("*");
@@ -119,13 +119,6 @@ void topBar(){
 	printf("Chaves: 0|2");
 	gotoxy(52,11);
 	printf("Portas: 0|1");
-	/*int cont=0;
-	while(cont<5000){
-		gotoxy(60,9);
-		printf("%d",cont);
-		Sleep(1000);
-		cont++;
-	}*/
 }
 void tabuleiro(char matriz [5][5]){
 	gotoxy(4,25);
@@ -200,7 +193,7 @@ void jogar(){
 		TCPressionada = tecla;
 		switch(TCPressionada){
 			case 75:
-					matriz[x][y] = 'x';
+					matriz[x][y] = ' ';
 					y -= 1;
 					if ((y < 0) || (y > 4)){
 						y += 1;
@@ -208,7 +201,7 @@ void jogar(){
 					movimenta(x,y); //Seta para esquerda
 					break;
 				case 72:
-					matriz[x][y] = 'x';
+					matriz[x][y] = ' ';
 					x -= 1;
 					if ((x < 0 ) || (x > 4)){
 						x += 1;
@@ -217,7 +210,7 @@ void jogar(){
 					movimenta(x,y); //Seta para cima
 					break;
 				case 77:
-					matriz[x][y] = 'x';
+					matriz[x][y] = ' ';
 					y += 1;
 					if ((y < 0) || (y > 4)){
 						y -= 1;
@@ -226,7 +219,7 @@ void jogar(){
 					movimenta(x,y); //Seta para direita
 					break;
 				case 80:
-					matriz[x][y] = 'x';
+					matriz[x][y] = ' ';
 					x += 1;
 					if ((x < 0 ) || (x > 4)){
 						x -= 1;
@@ -394,15 +387,15 @@ void telaLogin(){
 	int i = 0, y = 0;
 	for( i = 0; i <= 20; i ++ ){
 		gotoxy(3+i,1);
-		colorir(9,0);
+		colorir(3,0);
 		printf("*********");
-		for( y = 1; y <= 5; y++ ){
+		for( y = 1; y <= 8; y++ ){
 			gotoxy(3,y);
 			printf("*");
 			gotoxy(31,y);
 			printf("*");
 		}
-		gotoxy(3+i,6);
+		gotoxy(3+i,8);
 		printf("*********");
 		colorir(15,0);
 	}
@@ -412,6 +405,10 @@ void telaLogin(){
 	printf("Usuario: ");	
 	gotoxy(5,4);
 	printf("Senha: ");
+	gotoxy(5,6);
+	printf("[ Entrar ]");
+	gotoxy(18,6);
+	printf("[ Cancelar ]");
 	// Colocando o gets() ao lado dos campos de usuario e senha
 	colorir(6,0);
 	gotoxy(13,3);
@@ -421,22 +418,69 @@ void telaLogin(){
 	gets(senha);
 	setbuf(stdin,NULL);
 	colorir(15,0);
-	// Logar
-	int valor = listarUsuario(user,senha);
-	if(valor==1){
-		system("cls");
-		// abrir o jogo
-		menuSecundario();
+	// Gambiarra
+	gotoxy(5,6);
+	colorir(15,4);
+	printf("[ Entrar ]");
+	colorir(15,0);
+	gotoxy(18,6);
+	printf("[ Cancelar ]");
+	// Não mecher
+	char key;
+	int keyPressed;
+	int pos = 1;
+	int sair = 0;
+	while(1){
+		key = getch();
+		keyPressed = key;
+		switch(keyPressed){
+			case 75:{
+				pos = 1;
+				gotoxy(5,6);
+				colorir(15,4);
+				printf("[ Entrar ]");
+				colorir(15,0);
+				gotoxy(18,6);
+				printf("[ Cancelar ]");
+				break;
+			}
+			case 77:{
+				pos = 2;
+				gotoxy(5,6);
+				colorir(15,0);
+				printf("[ Entrar ]");
+				colorir(15,4);
+				gotoxy(18,6);
+				printf("[ Cancelar ]");
+				break;
+			}
+			case 13:{
+				if(pos==1){
+					// Logar
+					int valor = listarUsuario(user,senha);
+					if(valor==1){
+						system("cls");
+						// abrir o jogo
+						menuSecundario();
+					}
+					else {
+						gotoxy(5,13);
+						colorir(4,0);
+						printf("OPS paraece que os dados informados nao existem em nosso banco de dados!!");
+						colorir(15,0);
+						pause(5,10);
+					}
+				}
+				sair=1;
+				break;
+			}
+		}
+		if(sair==1)
+			break;
 	}
-	else {
-		gotoxy(5,8);
-		colorir(4,0);
-		printf("OPS paraece que os dados informados nao existem em nosso banco de dados!!");
-		colorir(15,0);
-		pause(5,10);
-	}
+	colorir(15,0);
 	system("cls");
-	arte_CSHARK(2);
+	arte_CSHARK();
 }
 // Tela de caadastro
 void menuCadasto(){
@@ -449,7 +493,7 @@ void menuCadasto(){
 	int keyValue, pos = 1;
 	// desenhando os * na tela
 	for( i=0; i < 55; i++ ){
-		colorir(9,0);
+		colorir(3,0);
 		gotoxy(3+i,2);
 		printf("***");
 		for( y=2; y<=15; y++ ){
@@ -524,7 +568,7 @@ void menuCadasto(){
 		pos=3;
 	}
 	// GAMBIARRA KKKKKKKKK
-	colorir(9,4);
+	colorir(15,4);
 	gotoxy(15,13);
 	printf("[ Salvar ]");
 	colorir(15,0);
@@ -560,7 +604,7 @@ void menuCadasto(){
 			}
 		}
 		if(pos==1){
-			colorir(9,4);
+			colorir(15,4);
 			gotoxy(15,13);
 			printf("[ Salvar ]");
 			colorir(15,0);
@@ -570,26 +614,26 @@ void menuCadasto(){
 			colorir(15,0);
 			gotoxy(15,13);
 			printf("[ Salvar ]");
-			colorir(9,4);
-			printf("[ Calcelar ]");
+			colorir(15,4);
+			printf("[ Cancelar ]");
 			colorir(15,0);
 		}
 	}
 	system("cls");
-	arte_CSHARK(2);
+	arte_CSHARK();
 }
 // Tela com o menu principal
 void menuPrincipal(){
 	system("cls");
-	arte_CSHARK(2);
+	arte_CSHARK();
 	char key;
 	int keyValue;
 	// Pos representa a posição do item selecionado
 	int pos=1;
 	gotoxy(5,9);
-	colorir(4,0);
+	colorir(11,0);
 	printf("		>> Cadastrar");
-	colorir(15,0);
+	colorir(14,0);
 	gotoxy(4,10);
 	printf("		Entrar");
 	gotoxy(4,11);
@@ -637,13 +681,14 @@ void menuPrincipal(){
 				break;
 			}	
 		}
+		colorir(14,0);
 		if(pos==1)
 		{
 			limpaTela();
 			gotoxy(4,9);
-			colorir(4,0);
+			colorir(11,0);
 			printf("		>> Cadastrar");
-			colorir(15,0);
+			colorir(14,0);
 			gotoxy(5,10);
 			printf("		Entrar");
 			gotoxy(5,11);
@@ -652,12 +697,13 @@ void menuPrincipal(){
 		else if(pos==2)
 		{
 			limpaTela();
+			colorir(14,0);
 			gotoxy(5,9);
 			printf("		Cadastrar");
 			gotoxy(4,10);
-			colorir(4,0);
+			colorir(11,0);
 			printf("		>> Entrar");
-			colorir(15,0);
+			colorir(14,0);
 			gotoxy(5,11);
 			printf("		Sair");
 		}
@@ -669,7 +715,7 @@ void menuPrincipal(){
 			gotoxy(5,10);
 			printf("		Entrar");
 			gotoxy(4,11);
-			colorir(4,0);
+			colorir(11,0);
 			printf("		>> Sair");
 			colorir(15,0);
 		}
