@@ -15,6 +15,7 @@
 // Variaveis 
 char matriz[5][5];
 char nomeUsuario[20];
+
 // Alinhas os quadros
 void gotoxy(int x, int y)
 {
@@ -28,14 +29,38 @@ void colorir(int F, int B) {
 	WORD wColor = ((B & 0x0F) << 4) + (F & 0x0F);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), wColor);
 }
+void btn_EntrarCancelar(int pos){
+	if(pos==0){
+		gotoxy(5,6);
+		printf("[ Entrar ]");
+		gotoxy(16,6);
+		printf("[ Cancelar ]");
+	}
+	else if(pos==1){
+		gotoxy(5,6);
+		colorir(15,4);
+		printf("[ Entrar ]");
+		colorir(15,0);
+		gotoxy(16,6);
+		printf("[ Cancelar ]");
+	}
+	else if(pos==2){
+		gotoxy(5,6);
+		colorir(15,0);
+		printf("[ Entrar ]");
+		colorir(15,4);
+		gotoxy(16,6);
+		printf("[ Cancelar ]");
+	}
+}
 // limpaTela menus // Gambirara kkkk
 void limpaTela(){
 	gotoxy(7,9);
-	printf(" 	                    ");
+	printf(" 	                     ");
 	gotoxy(7,10);
-	printf("        	           ");
+	printf("        	             ");
 	gotoxy(7,11);
-	printf("            		   ");
+	printf("                              		      ");
 }
 // Função para deixar o software pausado
 void pause(int x, int y){
@@ -383,6 +408,7 @@ void telaLogin(){
 	system("cls");
 	char user[15];
 	char senha[99];
+	int pos = 0;
 	//Desenhando as linhas
 	int i = 0, y = 0;
 	for( i = 0; i <= 20; i ++ ){
@@ -405,10 +431,7 @@ void telaLogin(){
 	printf("Usuario: ");	
 	gotoxy(5,4);
 	printf("Senha: ");
-	gotoxy(5,6);
-	printf("[ Entrar ]");
-	gotoxy(18,6);
-	printf("[ Cancelar ]");
+	btn_EntrarCancelar(pos);
 	// Colocando o gets() ao lado dos campos de usuario e senha
 	colorir(6,0);
 	gotoxy(13,3);
@@ -419,16 +442,10 @@ void telaLogin(){
 	setbuf(stdin,NULL);
 	colorir(15,0);
 	// Gambiarra
-	gotoxy(5,6);
-	colorir(15,4);
-	printf("[ Entrar ]");
-	colorir(15,0);
-	gotoxy(18,6);
-	printf("[ Cancelar ]");
+	btn_EntrarCancelar(1);
 	// Não mecher
 	char key;
 	int keyPressed;
-	int pos = 1;
 	int sair = 0;
 	while(1){
 		key = getch();
@@ -436,22 +453,12 @@ void telaLogin(){
 		switch(keyPressed){
 			case 75:{
 				pos = 1;
-				gotoxy(5,6);
-				colorir(15,4);
-				printf("[ Entrar ]");
-				colorir(15,0);
-				gotoxy(18,6);
-				printf("[ Cancelar ]");
+				btn_EntrarCancelar(pos);
 				break;
 			}
 			case 77:{
 				pos = 2;
-				gotoxy(5,6);
-				colorir(15,0);
-				printf("[ Entrar ]");
-				colorir(15,4);
-				gotoxy(18,6);
-				printf("[ Cancelar ]");
+				btn_EntrarCancelar(pos);
 				break;
 			}
 			case 13:{
