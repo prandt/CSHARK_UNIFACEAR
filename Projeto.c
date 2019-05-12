@@ -17,15 +17,11 @@
 // Variaveis 
 char matriz[MAX_MATRIZ][MAX_MATRIZ];
 char nomeUsuario[20];
+int chaveX = 0,chaveY = 0;
+int chave = 0;
+int portaX = 0, portaY = 0;
+int porta = 0;
 
-void zeraMatriz(){
-	int i , y;
-	for(i=0; i < MAX_MATRIZ;i++){
-		for(y=0; y < MAX_MATRIZ;y++){
-			matriz[i][y]=' ';
-		}
-	}
-}
 // Alinhas os quadros
 void gotoxy(int x, int y)
 {
@@ -38,6 +34,17 @@ void gotoxy(int x, int y)
 void colorir(int F, int B) {
 	WORD wColor = ((B & 0x0F) << 4) + (F & 0x0F);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), wColor);
+}
+int aleatorio(int max){
+	return  ( rand() % max );	
+}
+void zeraMatriz(){
+	int i , y;
+	for(i=0; i < MAX_MATRIZ;i++){
+		for(y=0; y < MAX_MATRIZ;y++){
+			matriz[i][y]=' ';
+		}
+	}
 }
 void btn_EntrarCancelar(int pos){
 	if(pos==0){
@@ -146,11 +153,11 @@ void topBar(){
 	gotoxy(52,5);
 	printf("Pontos:");
 	gotoxy(52,7);
-	printf("Vidas: ");
+	printf("Vidas: ");colorir(11,0);printf("%c %c %c %c",3,3,3,3);colorir(14,0);
 	gotoxy(52,9);
-	printf("Chaves: 0 | 2");
+	printf("Chave:");colorir(11,0);printf(" %d | 1",chave);colorir(14,0);
 	gotoxy(52,11);
-	printf("Portas: 0 | 1");
+	printf("Porta:");colorir(11,0);printf(" %d | 1",porta);colorir(14,0);
 }
 void tabuleiro(char matriz [5][5]){
 	gotoxy(4,25);
@@ -207,7 +214,38 @@ void movimenta(int x, int y){
 	matriz[x][y] = 'C';
 	tabuleiro(matriz);
 }
+void chaveEPorta(int x, int y){
+	if(x==chaveX && y==chaveY){
+		if(chave==0){
+			chave+=1;
+			topBar();
+			}
+	}
+	if(x==portaX && y==portaY){
+		if(porta==0){
+			porta+=1;
+			topBar();
+			}
+		if(chave==1){
+			//gotoxy(0,0);printf("Entrou");
+		}
+	}
+}
 void jogar(){
+	chaveX = aleatorio(MAX_MATRIZ);	
+	chaveY = aleatorio(MAX_MATRIZ);
+	portaX = aleatorio(MAX_MATRIZ);
+	portaY = aleatorio(MAX_MATRIZ);
+	if(chaveX == portaX && chaveY == portaY){
+		portaX = aleatorio(MAX_MATRIZ);
+		portaY = aleatorio(MAX_MATRIZ);
+	}
+	/*
+	gotoxy(0,0);
+	printf("Chave: [%d][%d] Porta: [%d][%d]",chaveX,chaveY,portaX,portaY); // teste para saber onde estão nascendo chave e porta
+	*/
+	chave = 0;
+	porta = 0;
 	topBar();
 	int x = 4;
 	int y = 4;
@@ -218,7 +256,7 @@ void jogar(){
 			casas[i][n]=' ';
 		}
 	}
-	casas[4][4]='C';
+	casas[x][y]='C';
 	tabuleiro(casas);
 	
 	char tecla;
@@ -234,6 +272,7 @@ void jogar(){
 						y += 1;
 					}
 					movimenta(x,y); //Seta para esquerda
+					chaveEPorta(x,y);
 					break;
 				case 72:
 					matriz[x][y] = ' ';
@@ -243,6 +282,7 @@ void jogar(){
 						
 					}
 					movimenta(x,y); //Seta para cima
+					chaveEPorta(x,y);
 					break;
 				case 77:
 					matriz[x][y] = ' ';
@@ -252,6 +292,7 @@ void jogar(){
 						
 					}
 					movimenta(x,y); //Seta para direita
+					chaveEPorta(x,y);
 					break;
 				case 80:
 					matriz[x][y] = ' ';
@@ -260,16 +301,16 @@ void jogar(){
 						x -= 1;
 					}
 					movimenta(x,y); //Seta para baixo
+					chaveEPorta(x,y);
 					break;
 				case 27:{
-					system("cls");
 					zeraMatriz();
 					sair=3;
-					arte_CSHARK(3);
+					system("cls");
+					arte_CSHARK();
 					break;
 				}
-			}
-		
+		}	
 	}
 }
 // Salvar dados do usuário
@@ -311,6 +352,7 @@ int listarUsuario(char user[15], char password[99]){
 void loading(){
 	system("cls");
 	int i;
+	colorir(11,0);
 	gotoxy(5,2);
 	printf("Carregando [");
 	gotoxy(27,2);
@@ -332,9 +374,9 @@ void menuSecundario(){
 	// Pos representa a posição do item selecionado
 	int pos=1, sair=0;
 	gotoxy(25,10);
-	colorir(14,0);
-	printf(">> Jogar");
 	colorir(11,0);
+	printf(">> Jogar");
+	colorir(14,0);
 	gotoxy(25,11);
 	printf("Ranking");
 	gotoxy(25,12);
@@ -379,9 +421,9 @@ void menuSecundario(){
 		{
 			limpaTela();
 			gotoxy(25,10);
-			colorir(14,0);
-			printf(">> Jogar");
 			colorir(11,0);
+			printf(">> Jogar");
+			colorir(14,0);
 			gotoxy(25,11);
 			printf("Ranking");
 			gotoxy(25,12);
@@ -393,9 +435,9 @@ void menuSecundario(){
 			gotoxy(25,10);
 			printf("Jogar");
 			gotoxy(25,11);
-			colorir(14,0);
-			printf(">> Ranking");
 			colorir(11,0);
+			printf(">> Ranking");
+			colorir(14,0);
 			gotoxy(25,12);
 			printf("Voltar");
 		}
@@ -407,9 +449,9 @@ void menuSecundario(){
 			gotoxy(25,11);
 			printf("Ranking");
 			gotoxy(25,12);
-			colorir(14,0);
-			printf(">> Voltar");
 			colorir(11,0);
+			printf(">> Voltar");
+			colorir(14,0);
 		}
 	}while(1 && sair!=3);
 }
