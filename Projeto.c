@@ -21,6 +21,7 @@ int chaveX = 0,chaveY = 0;
 int chave = 0;
 int portaX = 0, portaY = 0;
 int porta = 0;
+int vidas = 4;
 
 // Alinhas os quadros
 void gotoxy(int x, int y)
@@ -131,6 +132,14 @@ FILE* abrirArquivo(char modo, char caminho[30]){
 void fechaArquivo(FILE *arquivo){
 	fclose(arquivo);
 }
+void pg_Vidas(){
+	int i;
+	colorir(11,0);
+	for(i=0;i<vidas;i++){
+		printf("%c ",3);
+	}
+	colorir(14,0);
+}
 // Função para mostrar nome e pontuação na parte superior do jogo
 void topBar(){
 	int i,y;
@@ -153,7 +162,7 @@ void topBar(){
 	gotoxy(52,5);
 	printf("Pontos:");
 	gotoxy(52,7);
-	printf("Vidas: ");colorir(11,0);printf("%c %c %c %c",3,3,3,3);colorir(14,0);
+	printf("Vidas: ");pg_Vidas();
 	gotoxy(52,9);
 	printf("Chave:");colorir(11,0);printf(" %d | 1",chave);colorir(14,0);
 	gotoxy(52,11);
