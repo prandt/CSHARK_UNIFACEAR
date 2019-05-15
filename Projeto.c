@@ -39,6 +39,7 @@ void colorir(int F, int B) {
 int aleatorio(int max){
 	return  ( rand() % max );	
 }
+
 void zeraMatriz(){
 	int i , y;
 	for(i=0; i < MAX_MATRIZ;i++){
@@ -46,6 +47,24 @@ void zeraMatriz(){
 			matriz[i][y]=' ';
 		}
 	}
+}
+// Mostra barra de progresso
+void loading(){
+	system("cls");
+	int i;
+	colorir(11,0);
+	gotoxy(5,2);
+	printf("Carregando [");
+	gotoxy(27,2);
+	printf("]");
+	colorir(14,0);
+	gotoxy(17,2);
+	for( i=0;i<=9;i++ ){
+		printf("#");
+		Sleep(150);		
+	}
+	colorir(15,0);
+	system("cls");
 }
 void btn_EntrarCancelar(int pos){
 	if(pos==0){
@@ -89,20 +108,57 @@ void pause(int x, int y){
 		keyValue = key;
 	}while(keyValue!=13);
 }
+void logo(){
+	colorir(14,0);
+	gotoxy(4,2);
+	printf("*******  ************  ****   ****  ***********  ***********  ****    ****");
+	gotoxy(4,3);
+	printf("* *****  * **********  *  *   *  *  *   ***   *  * *     * *  *  *   *  *");
+	gotoxy(4,4);
+	printf("* *      * *           *  *   *  *  *  *   *  *  * *     * *  *  *  *  *");
+	gotoxy(4,5);
+	printf("* *      * **********  *  *****  *  * *     * *  * ******* *  *  * *  *");
+	gotoxy(4,6);
+	printf("* *      ********** *  *  *****  *  *  *****  *  * *********  *  * * *");
+	gotoxy(4,7);
+	printf("* *               * *  *  *   *  *  *  *   *  *  * *  * *     *  * *  *");
+	gotoxy(4,8);
+	printf("* *****  ********** *  *  *   *  *  *  *   *  *  * *   * *    *  *  *  *");
+	gotoxy(4,9);
+	printf("*******  ************  ****   ****  ****   ****  ***    ***   ****   ****");
+}
+void molduraPequena(){
+	//int i = 0, y = 0;
+	//colorir(11,0);
+	//for( i = 0; i < 60; i ++ ){
+		//gotoxy(2+i,1);
+		//printf("*");
+		//for( y = 1; y <= 16; y++ ){
+			//gotoxy(30,y);
+			//printf("*");
+			//gotoxy(49,y);
+			//printf("*");
+		//}
+		//gotoxy(30+i,16);
+		//printf("*");
+	//}
+	//colorir(15,0);
+	
+}
 // Arte e moldura padrão do software
 void arte_CSHARK(){
 	int i = 0, y = 0;
 	colorir(11,0);
-	for( i = 0; i < 60; i ++ ){
-		gotoxy(3+i,1);
+	for( i = 0; i < 78; i ++ ){
+		gotoxy(2+i,1);
 		printf("*");
 		for( y = 1; y <= 19; y++ ){
-			gotoxy(3,y);
+			gotoxy(2,y);
 			printf("*");
-			gotoxy(62,y);
+			gotoxy(79,y);
 			printf("*");
 		}
-		gotoxy(3+i,19);
+		gotoxy(2+i,19);
 		printf("*");
 	}
 	colorir(15,0);
@@ -140,6 +196,67 @@ void pg_Vidas(){
 	}
 	colorir(14,0);
 }
+//Função para mostrar ranking
+void telaRanking(){
+	system("cls");	
+	colorir(11,0);
+	gotoxy(4,4);
+	printf("#####################################");
+	gotoxy(4,5);
+	printf("##             Ranking             ##");
+	gotoxy(4,6);
+	printf("#####################################");
+	gotoxy(4,7);
+	printf("## Posicao |  Jogador |  Pontuacao ##");
+	gotoxy(4,8);
+	printf("#####################################");
+	
+	int i = 9;
+	for(i; i<29; i++){
+	gotoxy(4,i);
+	printf("##    8    |   ex8    |      7     ##");
+	i ++;
+	gotoxy(4,i);
+	printf("#####################################");
+		
+	}
+	pause(25,30);
+	system("cls");
+	arte_CSHARK();	
+}
+int mascaraNumerica(int x, int y){
+	int key;
+	char keyPressed, strNumero[3];
+	int i = 0, n;
+	float numero = 0;
+	gotoxy(x,y);
+	printf(": ");
+	while(1){
+		keyPressed = getch();
+		key = keyPressed;
+		if( i < 3 ){
+			if(key > 47 && key < 58 || key == 46){
+				strNumero[i] = keyPressed;
+				i++;
+				gotoxy(x+i,y);
+				printf("%c",keyPressed);
+			}
+		}
+		if( key == 8){
+			for(n = 0; n < 3; n++){
+				strNumero[n] = 'a';
+			}
+			gotoxy(x+1,y);
+			printf("   ");
+			i=0;
+		}
+		if( key == 13 ){
+			break;
+		}
+	}
+	numero = atoi(strNumero); 
+	return numero;
+}
 // Função para mostrar nome e pontuação na parte superior do jogo
 void topBar(){
 	int i,y;
@@ -167,6 +284,73 @@ void topBar(){
 	printf("Chave:");colorir(11,0);printf(" %d | 1",chave);colorir(14,0);
 	gotoxy(52,11);
 	printf("Porta:");colorir(11,0);printf(" %d | 1",porta);colorir(14,0);
+}
+// Função para mostrar as perguntas
+void perguntasFacil(){
+	int soma = 0;
+	int resultado = 0;
+	int i =0;
+	do{
+		soma = 0;
+		int valor1 = aleatorio(10);
+		int valor2 = aleatorio(10);
+	
+		gotoxy(60,15);
+		printf("%d + %d",valor1,valor2);
+		soma = valor1 + valor2;
+		gotoxy(60,16);
+		printf("Resultado");
+		resultado = mascaraNumerica(69,16);
+		
+		gotoxy(60,16);
+		printf("               ");
+		gotoxy(60,15);
+		printf("               ");
+	}while(resultado != soma);	 	
+}
+void perguntasMedio(){
+	int soma = 0;
+	int resultado = 0;
+	int i =0;
+	do{
+		soma = 0;
+		int valor1 = aleatorio(10);
+		int valor2 = aleatorio(10);
+	
+		gotoxy(60,15);
+		printf("%d * %d",valor1,valor2);
+		soma = valor1 * valor2;
+		gotoxy(60,16);
+		printf("Resultado");
+		resultado = mascaraNumerica(69,16);
+		
+		gotoxy(60,16);
+		printf("               ");
+		gotoxy(60,15);
+		printf("               ");
+	}while(resultado != soma);	 	
+}
+void perguntasDificil(){
+	float soma = 0;
+	float resultado = 0;
+	int i =0;
+	do{
+		soma = 0;
+		int valor1 = aleatorio(10);
+		int valor2 = aleatorio(10);
+	
+		gotoxy(60,15);
+		printf("%d / %d",valor1,valor2);
+		soma = valor1 / valor2;
+		gotoxy(60,16);
+		printf("Resultado");
+		resultado = mascaraNumerica(69,16);
+		
+		gotoxy(60,16);
+		printf("               ");
+		gotoxy(60,15);
+		printf("               ");
+	}while(resultado != soma);	 
 }
 void tabuleiro(char matriz [5][5]){
 	gotoxy(4,25);
@@ -240,12 +424,38 @@ void chaveEPorta(int x, int y){
 		}
 	}
 }
-void jogar(){
+void perguntas(int nivel){
+	if(nivel==1){
+		perguntasFacil();
+	}
+	else if(nivel==2){
+		perguntasMedio();
+	}
+	else if(nivel==3){
+		perguntasDificil();
+	}
+}
+void jogar(int nivel){
+	// Barra de progresso
+	loading();
+	
+	// Gera a chave e porta aleatoria
 	chaveX = aleatorio(MAX_MATRIZ);	
 	chaveY = aleatorio(MAX_MATRIZ);
 	portaX = aleatorio(MAX_MATRIZ);
 	portaY = aleatorio(MAX_MATRIZ);
-	if(chaveX == portaX && chaveY == portaY){
+	// Nao deixa a chave e porta nascerem no mesmo local
+	if(chaveX == portaX && chaveY == portaY ){
+		portaX = aleatorio(MAX_MATRIZ);
+		portaY = aleatorio(MAX_MATRIZ);
+	}
+	// Nao deixa a chave nascer na primeira posicao
+	if( chaveX == 4 && chaveY == 4  ){
+		chaveX = aleatorio(MAX_MATRIZ);	
+		chaveY = aleatorio(MAX_MATRIZ);
+	}
+	// Nao deixa a porta nascer na primeria posicao
+	if(  portaY == 4 && portaX == 4){
 		portaX = aleatorio(MAX_MATRIZ);
 		portaY = aleatorio(MAX_MATRIZ);
 	}
@@ -280,6 +490,7 @@ void jogar(){
 					if ((y < 0) || (y > 4)){
 						y += 1;
 					}
+					perguntas(nivel);
 					movimenta(x,y); //Seta para esquerda
 					chaveEPorta(x,y);
 					break;
@@ -290,6 +501,7 @@ void jogar(){
 						x += 1;
 						
 					}
+					perguntas(nivel);
 					movimenta(x,y); //Seta para cima
 					chaveEPorta(x,y);
 					break;
@@ -300,6 +512,7 @@ void jogar(){
 						y -= 1;
 						
 					}
+					perguntas(nivel);
 					movimenta(x,y); //Seta para direita
 					chaveEPorta(x,y);
 					break;
@@ -309,6 +522,7 @@ void jogar(){
 					if ((x < 0 ) || (x > 4)){
 						x -= 1;
 					}
+					perguntas(nivel);
 					movimenta(x,y); //Seta para baixo
 					chaveEPorta(x,y);
 					break;
@@ -321,6 +535,116 @@ void jogar(){
 				}
 		}	
 	}
+}
+void menu_nivel(){
+	system("cls");
+	arte_CSHARK();
+	char key;
+	int keyValue;
+	// Pos representa a posição do item selecionado
+	int pos=1, sair=0;
+	gotoxy(35,13);
+	colorir(11,0);
+	printf(">> Facil   ");
+	colorir(14,0);
+	gotoxy(35,14);
+	printf("Medio      ");
+	gotoxy(35,15);
+	printf("Dificil   ");
+	gotoxy(35,16);
+	printf("Voltar    ");
+	
+	do{
+		key = getch();
+		keyValue = key;
+		switch(keyValue){
+			// Pressionou para cima
+			case 72:{
+				if(pos > 1 && pos <= 4){
+					pos--;
+				}		
+				break;
+			}
+			// Pressionou para baixo
+			case 80:{
+				if(pos >= 1 && pos < 4){
+					pos++;	
+				}
+				break;
+			}
+			case 13:{
+				system("cls");
+				if(pos==4){
+					sair=3;
+				}
+				else {
+					jogar(pos);	
+				}
+				break;
+			}
+			default:{
+				break;
+			}	
+		}
+		if(pos==1)
+		{
+			limpaTela();
+			gotoxy(35,13);
+			colorir(11,0);
+			printf(">> Facil  ");
+			colorir(14,0);
+			gotoxy(35,14);
+			printf("Medio     ");
+			gotoxy(35,15);
+			printf("Dificil   ");
+			gotoxy(35,16);
+			printf("Voltar    ");
+		}
+		else if(pos==2)
+		{
+			limpaTela();
+			gotoxy(35,13);
+			printf("Facil     ");
+			gotoxy(35,14);
+			colorir(11,0);
+			printf(">> Medio   ");
+			colorir(14,0);
+			gotoxy(35,15);
+			printf("Dificil    ");
+			gotoxy(35,16);
+			printf("Voltar    ");
+		}
+		else if(pos==3)
+		{
+			limpaTela();
+			colorir(14,0);
+			gotoxy(35,13);
+			printf("Facil     ");
+			gotoxy(35,14);
+			printf("Medio     ");
+			gotoxy(35,15);
+			colorir(11,0);
+			printf(">> Dificil  ");
+			colorir(14,0);
+			gotoxy(35,16);
+			printf("Voltar    ");
+		}
+		else if(pos==4){
+			limpaTela();
+			colorir(14,0);
+			gotoxy(35,13);
+			printf("Facil     ");
+			gotoxy(35,14);
+			printf("Medio     ");
+			gotoxy(35,15);
+			printf("Dificil    ");
+			gotoxy(35,16);
+			colorir(11,0);
+			printf(">> Voltar    ");
+		}
+	}while(1 && sair!=3);
+	system("cls");
+	arte_CSHARK();
 }
 // Salvar dados do usuário
 void salvarUsuario(char nome[15], char senha[99]){
@@ -357,38 +681,21 @@ int listarUsuario(char user[15], char password[99]){
 	fechaArquivo(arquivo);	
 	return valor;
 }
-// Mostra barra de progresso
-void loading(){
-	system("cls");
-	int i;
-	colorir(11,0);
-	gotoxy(5,2);
-	printf("Carregando [");
-	gotoxy(27,2);
-	printf("]");
-	colorir(14,0);
-	gotoxy(17,2);
-	for( i=0;i<=9;i++ ){
-		printf("#");
-		Sleep(150);		
-	}
-	colorir(15,0);
-	system("cls");
-}
 void menuSecundario(){
 	system("cls");
 	arte_CSHARK(3);
+	logo();
 	char key;
 	int keyValue;
 	// Pos representa a posição do item selecionado
 	int pos=1, sair=0;
-	gotoxy(25,10);
+	gotoxy(35,13);
 	colorir(11,0);
 	printf(">> Jogar");
 	colorir(14,0);
-	gotoxy(25,11);
+	gotoxy(35,14);
 	printf("Ranking");
-	gotoxy(25,12);
+	gotoxy(35,15);
 	printf("Voltar");
 	do{
 		key = getch();
@@ -411,11 +718,11 @@ void menuSecundario(){
 			case 13:{
 				if(pos==1){
 					system("cls");
-					loading();
-					jogar();
+					menu_nivel();
 				}
 				if(pos==2){
-					
+					system("cls");
+					telaRanking();	
 				}
 				if(pos==3){
 					sair=3;
@@ -429,35 +736,35 @@ void menuSecundario(){
 		if(pos==1)
 		{
 			limpaTela();
-			gotoxy(25,10);
+			gotoxy(35,13);
 			colorir(11,0);
 			printf(">> Jogar");
 			colorir(14,0);
-			gotoxy(25,11);
-			printf("Ranking");
-			gotoxy(25,12);
-			printf("Voltar");
+			gotoxy(35,14);
+			printf("Ranking   ");
+			gotoxy(35,15);
+			printf("Voltar   ");
 		}
 		else if(pos==2)
 		{
 			limpaTela();
-			gotoxy(25,10);
-			printf("Jogar");
-			gotoxy(25,11);
+			gotoxy(35,13);
+			printf("Jogar   ");
+			gotoxy(35,14);
 			colorir(11,0);
 			printf(">> Ranking");
 			colorir(14,0);
-			gotoxy(25,12);
-			printf("Voltar");
+			gotoxy(35,15);
+			printf("Voltar   ");
 		}
 		else if(pos==3)
 		{
 			limpaTela();
-			gotoxy(25,10);
-			printf("Jogar");
-			gotoxy(25,11);
-			printf("Ranking");
-			gotoxy(25,12);
+			gotoxy(35,13);
+			printf("Jogar  ");
+			gotoxy(35,14);
+			printf("Ranking   ");
+			gotoxy(35,15);
 			colorir(11,0);
 			printf(">> Voltar");
 			colorir(14,0);
@@ -666,18 +973,20 @@ void menuCadasto(){
 void menuPrincipal(){
 	system("cls");
 	arte_CSHARK();
+	logo();
+	molduraPequena();
 	char key;
 	int keyValue;
 	// Pos representa a posição do item selecionado
 	int pos=1;
-	gotoxy(25,10);
+	gotoxy(35,13);
 	colorir(11,0);
 	printf(">> Cadastrar");
 	colorir(14,0);
-	gotoxy(25,11);
-	printf("Entrar");
-	gotoxy(25,12);
-	printf("Sair");
+	gotoxy(35,14);
+	printf("Entrar   ");
+	gotoxy(35,15);
+	printf("Sair   ");
 	do{
 		key = getch();
 		keyValue = key;
@@ -726,35 +1035,35 @@ void menuPrincipal(){
 		if(pos==1)
 		{
 			limpaTela();
-			gotoxy(25,10);
+			gotoxy(35,13);
 			colorir(11,0);
 			printf(">> Cadastrar");
 			colorir(14,0);
-			gotoxy(25,11);
-			printf("Entrar");
-			gotoxy(25,12);
-			printf("Sair");
+			gotoxy(35,14);
+			printf("Entrar   ");
+			gotoxy(35,15);
+			printf("Sair   ");
 		}
 		else if(pos==2)
 		{
 			limpaTela();
-			gotoxy(25,10);
-			printf("Cadastrar");
-			gotoxy(25,11);
+			gotoxy(35,13);
+			printf("Cadastrar   ");
+			gotoxy(35,14);
 			colorir(11,0);
 			printf(">> Entrar");
 			colorir(14,0);
-			gotoxy(25,12);
-			printf("Sair");
+			gotoxy(35,15);
+			printf("Sair   ");
 		}
 		else if(pos==3)
 		{
 			limpaTela();
-			gotoxy(25,10);
-			printf("Cadastrar");
-			gotoxy(25,11);
-			printf("Entrar");
-			gotoxy(25,12);
+			gotoxy(35,13);
+			printf("Cadastrar   ");
+			gotoxy(35,14);
+			printf("Entrar   ");
+			gotoxy(35,15);
 			colorir(11,0);
 			printf(">> Sair");
 			colorir(14,0);
