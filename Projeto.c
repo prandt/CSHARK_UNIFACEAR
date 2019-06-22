@@ -11,6 +11,7 @@
 #include <windows.h>
 #include <string.h>
 #include <conio.h>
+#include <locale.h>
 
 #define MAX_MATRIZ 5
 #define MAX_VIDAS 4
@@ -23,9 +24,9 @@ int chave = 0;
 int portaX = 0, portaY = 0;
 int porta = 0;
 
-
 struct Jogador{
 	char nomeUsuario[20];
+	char senha[99];
 	int vidas;
 	int pontos;	
 };
@@ -178,6 +179,10 @@ FILE* abrirArquivo(char modo, char caminho[30]){
 void fechaArquivo(FILE *arquivo){
 	fclose(arquivo);
 }
+void salvaSecsao(){
+	//jogador.nomeUsuario;
+	//jogador.pontos;
+}
 void pg_Vidas(){
 	int i;
 	colorir(11,0);
@@ -194,9 +199,12 @@ void telaRanking(){
 	FILE *arquivo;
 	struct Jogador lista_jogadores[50];
 	arquivo = abrirArquivo('l',"dados.txt");
+
 	char senha[15];
 	char vPontos[10];
+
 	int cont = 0;
+
 	while(!feof(arquivo)){
 			fscanf(arquivo,"%s %s %s ",lista_jogadores[cont].nomeUsuario,senha,vPontos);
 			lista_jogadores[cont].pontos = atoi(vPontos);
@@ -207,13 +215,13 @@ void telaRanking(){
 
 	colorir(14,0);
 	gotoxy(6,2);
-	printf("#####################################");
+	printf("###########################################");
 	gotoxy(6,3);
-	printf("##           Ranking  C-SHark      ##");
+	printf("##           Classificação  C-SHark      ##");
 	gotoxy(6,4);
-	printf("#####################################");
+	printf("###########################################");
 	gotoxy(6,5);
-	printf("## Posicao |  Jogador |  Pontuacao ##");
+	printf("##  Posicao |   Jogador  |   Pontuacao   ##");
 	gotoxy(6,6);
 	printf("#####################################");
 	
@@ -233,13 +241,15 @@ void telaRanking(){
         }
     }
     int y = 0;
-    for(i = 0;i < cont; i++){
+    for(i = 0;i <= cont && i < 10; i++){
     	gotoxy(6,i+7);
     	printf("##    %d    |   %s    |      %d     ##\n",(i+1),lista_jogadores[i].nomeUsuario,lista_jogadores[i].pontos);
 	}
-	gotoxy(6,17);
+	gotoxy(6,i+7);
 	printf("#####################################");
+
 	pause(25,30);	
+
 	system("cls");
 	logo();
 	moldura();	
@@ -717,6 +727,7 @@ int listarUsuario(char user[15], char password[99]){
 		fscanf(arquivo,"%s %s %s ",nome,senha,vPontos);
 		if(strcmp(user,nome) == 0 && strcmp(senha,password) == 0) {
 			strcpy(jogador.nomeUsuario,nome);
+			strcpy(jogador.senha,senha);
 			valor =  1;
 			jogador.pontos = atoi(vPontos);
 		//	pontos = vPontos;
@@ -742,7 +753,7 @@ void menuSecundario(){
 	printf(">> Jogar");
 	colorir(14,0);
 	gotoxy(35,14);
-	printf("Ranking");
+	printf("Classificação");
 	gotoxy(35,15);
 	printf("Voltar");
 	do{
@@ -789,7 +800,7 @@ void menuSecundario(){
 			printf(">> Jogar");
 			colorir(14,0);
 			gotoxy(35,14);
-			printf("Ranking   ");
+			printf("Classificação      ");
 			gotoxy(35,15);
 			printf("Voltar   ");
 		}
@@ -801,7 +812,7 @@ void menuSecundario(){
 			printf("Jogar   ");
 			gotoxy(35,14);
 			colorir(11,0);
-			printf(">> Ranking");
+			printf(">> Classificação");
 			colorir(14,0);
 			gotoxy(35,15);
 			printf("Voltar   ");
@@ -812,7 +823,7 @@ void menuSecundario(){
 			gotoxy(35,13);
 			printf("Jogar  ");
 			gotoxy(35,14);
-			printf("Ranking   ");
+			printf("Classificação      ");
 			gotoxy(35,15);
 			colorir(11,0);
 			printf(">> Voltar");
@@ -1127,6 +1138,7 @@ void menuPrincipal(){
 int main()
 {	
 	system("MODE CON: COLS=100 LINES=100");
+	setlocale(LC_ALL, "Portuguese");
 	menuPrincipal();
 	return 0;
 }
