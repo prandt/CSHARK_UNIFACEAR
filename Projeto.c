@@ -24,6 +24,8 @@ int chave = 0;
 int portaX = 0, portaY = 0;
 int porta = 0;
 
+int sairMaster = 0;
+
 struct Jogador{
 	char nomeUsuario[20];
 	char senha[99];
@@ -51,9 +53,102 @@ void zeraMatriz(){
 	int i , y;
 	for(i=0; i < MAX_MATRIZ;i++){
 		for(y=0; y < MAX_MATRIZ;y++){
-			matriz[i][y]=' ';
+			matriz[i][y]='X';
 		}
 	}
+}
+void LimpaTelaDesenho(){
+	gotoxy(50,25);
+	printf("                                ");
+	gotoxy(50,26);
+	printf("                             ");
+	gotoxy(50,27);
+	printf("                             ");
+	gotoxy(50,28);
+	printf("                          ");
+	gotoxy(50,29);
+	printf("                        ");
+	gotoxy(50,30);
+	printf("                        ");
+	gotoxy(50,31);
+	printf("                       ");
+	gotoxy(50,32);
+	printf("                       ");
+	
+}
+void AcertoMiseravi(){
+	/*int i,y;
+	colorir(11,0);
+	for( i=0; i < 56; i++ ){
+		gotoxy(5+i,35);
+		printf("*");
+		for( y=1; y <= 2; y++ ){
+			gotoxy(5,35+y);
+			printf("*");
+			gotoxy(60,35+y);
+			printf("*");
+		}
+		gotoxy(5+i,37);
+		printf("*");
+	}*/
+	colorir(2,0);
+	gotoxy(55,25);
+	printf("            **");
+	gotoxy(55,26);
+	printf("           **");
+	gotoxy(55,27);
+	printf("          **");
+	gotoxy(55,28);
+	printf("         **");
+	gotoxy(55,29);
+	printf("**      **");
+	gotoxy(55,30);
+	printf(" **    **");
+	gotoxy(55,31);
+	printf("  **  **");
+	gotoxy(55,32);
+	printf("   ****");	
+}
+void ERRRRRRROUU(){
+	colorir(4,0);
+	gotoxy(55,25);	
+	printf("**      **");
+	gotoxy(55,26);
+	printf(" **    **");
+	gotoxy(55,27);
+	printf("  **  **");
+	gotoxy(55,28);
+	printf("   ****");
+	gotoxy(55,29);
+	printf("   ****");
+	gotoxy(55,30);
+	printf("  **  **");
+	gotoxy(55,31);
+	printf(" **    **");
+	gotoxy(55,32);
+	printf("**      **");
+}
+void TelaChave(){
+	colorir(6,0);
+    gotoxy(50,28);
+    printf("+:+:+:+:+:+:+");
+    gotoxy(50,29);
+    printf("+#+#+#+#+#+#+");
+    int x = 63, y = 25;
+    gotoxy(x,y);
+    printf(" ::::::::  ");
+    gotoxy(x,y+1);
+    printf(":+:    :+: ");
+    gotoxy(x,y+2);
+    printf("+:+    +:+ ");
+    gotoxy(x,y+3);
+    printf("+#+    +:+ ");
+    gotoxy(x,y+4);
+    printf("+#+    +#+ ");
+    gotoxy(x,y+5);
+    printf("#+#    #+# ");
+    gotoxy(x,y+6);
+    printf(" ########  ");
 }
 // Arte e moldura padrão do software
 void moldura(){
@@ -73,24 +168,55 @@ void moldura(){
 	}
 	colorir(15,0);
 }
+void molduraJogo(){
+	int i = 0, y = 0;
+	colorir(11,0);
+	for( i = 0; i < 85; i ++ ){
+		gotoxy(2+i,1);
+		printf("*");
+		for( y = 1; y <= 42; y++ ){
+			gotoxy(2,y);
+			printf("*");
+			gotoxy(86,y);
+			printf("*");
+		}
+		gotoxy(2+i,42);
+		printf("*");
+	}
+	colorir(15,0);
+	
+	
+}
 void logo(){
 	colorir(14,0);
-	gotoxy(4,2);
-	printf("*******  ************  ****   ****  ***********  ***********  ****    ****");
-	gotoxy(4,3);
-	printf("* *****  * **********  *  *   *  *  *   ***   *  * *     * *  *  *   *  *");
-	gotoxy(4,4);
-	printf("* *      * *           *  *   *  *  *  *   *  *  * *     * *  *  *  *  *");
-	gotoxy(4,5);
-	printf("* *      * **********  *  *****  *  * *     * *  * ******* *  *  * *  *");
-	gotoxy(4,6);
-	printf("* *      ********** *  *  *****  *  *  *****  *  * *********  *  * * *");
-	gotoxy(4,7);
-	printf("* *               * *  *  *   *  *  *  *   *  *  * *  * *     *  * *  *");
-	gotoxy(4,8);
-	printf("* *****  ********** *  *  *   *  *  *  *   *  *  * *   * *    *  *  *  *");
-	gotoxy(4,9);
-	printf("*******  ************  ****   ****  ****   ****  ***    ***   ****   ****");
+	gotoxy(5,3);	
+	printf(" ::::::::         ::::::::  :::    :::     :::     :::::::::  :::    ::: ");
+	gotoxy(5,4);
+	printf(":+:    :+:       :+:    :+: :+:    :+:   :+: :+:   :+:    :+: :+:   :+:  ");
+	gotoxy(5,5);
+	printf("+:+              +:+        +:+    +:+  +:+   +:+  +:+    +:+ +:+  +:+   ");
+	gotoxy(5,6);
+	printf("+#+        +#++: +#++:++#++ +#++:++#++ +#++:++#++: +#++:++#:  +#++:++    ");
+	gotoxy(5,7);
+	printf("+#+                     +#+ +#+    +#+ +#+     +#+ +#+    +#+ +#+  +#+   ");
+	gotoxy(5,8);
+	printf("#+#    #+#       #+#    #+# #+#    #+# #+#     #+# #+#    #+# #+#   #+#  ");
+	gotoxy(5,9);
+	printf(" ########         ########  ###    ### ###     ### ###    ### ###    ### ");
+	/*gotoxy(10,3);
+	printf("  #####           #####   #     #     #     ######   #    # ");
+	gotoxy(10,4);
+	printf(" #     #         #     #  #     #    # #    #     #  #   #  ");
+	gotoxy(10,5);
+	printf(" #               #        #     #   #   #   #     #  #  #   ");
+	gotoxy(10,6);
+	printf(" #        #####   #####   #######  #     #  ######   ###    ");
+	gotoxy(10,7);
+	printf(" #                     #  #     #  #######  #   #    #  #   ");
+	gotoxy(10,8);
+	printf(" #     #         #     #  #     #  #     #  #    #   #   #  ");
+	gotoxy(10,9);
+	printf("  #####           #####   #     #  #     #  #     #  #    # ");*/
 }
 // Mostra barra de progresso
 void loading(){
@@ -99,12 +225,12 @@ void loading(){
 	logo();
 	int i;
 	colorir(14,0);
-	gotoxy(20,14);
+	gotoxy(24,14);
 	printf("Carregando [");
-	gotoxy(42,14);
+	gotoxy(46,14);
 	printf("]");
 	colorir(11,0);
-	gotoxy(32,14);
+	gotoxy(36,14);
 	for( i=0;i<=9;i++ ){
 		printf("#");
 		Sleep(150);		
@@ -180,8 +306,31 @@ void fechaArquivo(FILE *arquivo){
 	fclose(arquivo);
 }
 void salvaSecsao(){
-	//jogador.nomeUsuario;
-	//jogador.pontos;
+	//jogador.nomeUsuario; //jogador.pontos; //jogador.senha
+	FILE *arquivo;
+	arquivo = abrirArquivo('l',"dados.txt");
+	char nome[100][50], senha[100][99], pontos[100][10];
+
+	int cont = 0;
+	while(!feof(arquivo)){
+		fscanf(arquivo,"%s %s %s ",nome[cont],senha[cont],pontos[cont]);
+		cont++;
+	}
+	fechaArquivo(arquivo);
+	int i;
+	char buffer[20];
+	for(i=0; i<cont; i++){
+		if( strcmp(nome[i],jogador.nomeUsuario) == 0){
+			if(jogador.pontos > atoi(pontos[i])){
+				strcpy(pontos[i],itoa(jogador.pontos,buffer,10));
+			}
+		}
+	}
+	arquivo = abrirArquivo('g',"dados.txt");
+	for(i = 0; i < cont ; i++){
+		fprintf(arquivo,"%s %s %s\n",nome[i],senha[i],pontos[i]);
+	}
+	fechaArquivo(arquivo);
 }
 void pg_Vidas(){
 	int i;
@@ -194,7 +343,7 @@ void pg_Vidas(){
 //Função para mostrar ranking
 void telaRanking(){
 	system("cls");	
-	moldura();
+	//moldura();
 	
 	FILE *arquivo;
 	struct Jogador lista_jogadores[50];
@@ -211,19 +360,30 @@ void telaRanking(){
 			cont++;
 		
 	}
-	//cont -= 1;
-
+	cont -= 1;
+	
+	logo();
+	molduraJogo();
+	
+	int cont2 = 0;
 	colorir(14,0);
-	gotoxy(6,2);
+	gotoxy(21,15);
 	printf("###########################################");
-	gotoxy(6,3);
-	printf("##           Classificação  C-SHark      ##");
-	gotoxy(6,4);
+	gotoxy(21,16);
+	printf("##           Classificação               ##");
+	gotoxy(21,17);
 	printf("###########################################");
-	gotoxy(6,5);
+	gotoxy(21,18);
 	printf("##  Posicao |   Jogador  |   Pontuacao   ##");
-	gotoxy(6,6);
-	printf("#####################################");
+	gotoxy(21,19);
+	printf("###########################################");
+	
+	for(cont =0; cont <10; cont++){
+		gotoxy(21,20+cont);
+		printf("##          |            |               ##");
+		gotoxy(21,21+cont);
+		printf("###########################################");
+	}
 	
 	int aux = 0,i, j;
 	char auxNome[15];
@@ -242,13 +402,20 @@ void telaRanking(){
     }
     int y = 0;
     for(i = 0;i <= cont && i < 10; i++){
-    	gotoxy(6,i+7);
-    	printf("##    %d    |   %s    |      %d     ##\n",(i+1),lista_jogadores[i].nomeUsuario,lista_jogadores[i].pontos);
+    	gotoxy(23,i+20);
+    	printf("   %d\n",(i+1));
+    	gotoxy(35,i+20);
+    	colorir(11,0);
+    	printf(" %s\n",lista_jogadores[i].nomeUsuario);
+    	gotoxy(55,i+20);
+    	colorir(14,0);
+    	printf(" %d\n",lista_jogadores[i].pontos);
+    	
 	}
-	gotoxy(6,i+7);
+	gotoxy(21,i+20);
 	printf("#####################################");
 
-	pause(25,30);	
+	pause(25,34);	
 
 	system("cls");
 	logo();
@@ -284,39 +451,118 @@ int mascaraNumerica(int x, int y, int maxNumbers){
 	numero = atoi(strNumero); 
 	return numero;
 }
+void game_over(){
+	system("cls");
+	moldura();
+	colorir(14,0);
+	int x = 9, y = 5;
+	
+	gotoxy(x,y);
+	printf(":::::::::  :::::::::: :::::::::  :::::::::  :::::::::: :::    ::: ");
+	gotoxy(x,y+1);
+	printf(":+:    :+: :+:        :+:    :+: :+:    :+: :+:        :+:    :+: ");
+	gotoxy(x,y+2);
+	printf("+:+    +:+ +:+        +:+    +:+ +:+    +:+ +:+        +:+    +:+ ");
+	gotoxy(x,y+3);
+	printf("+#++:++#+  +#++:++#   +#++:++#:  +#+    +:+ +#++:++#   +#+    +:+ ");
+	gotoxy(x,y+4);
+	printf("+#+        +#+        +#+    +#+ +#+    +#+ +#+        +#+    +#+ ");
+	gotoxy(x,y+5);
+	printf("#+#        #+#        #+#    #+# #+#    #+# #+#        #+#    #+# ");
+	gotoxy(x,y+6);
+	printf("###        ########## ###    ### #########  ##########  ########");
+
+	Sleep(1500);
+}
+void boa(){
+	system("cls");
+	moldura();
+	int x = 18, y = 6;
+	colorir(14,0);
+	gotoxy(x,y);
+	printf(":::::::::   ::::::::      :::     ::: ");
+	gotoxy(x,y+1);
+	printf(":+:    :+: :+:    :+:   :+: :+:   :+: ");
+	gotoxy(x,y+2);
+	printf("+:+    +:+ +:+    +:+  +:+   +:+  +:+ ");
+	gotoxy(x,y+3);
+	printf("+#++:++#+  +#+    +:+ +#++:++#++: +#+ ");
+	gotoxy(x,y+4);
+	printf("+#+    +#+ +#+    +#+ +#+     +#+ +#+ ");
+	gotoxy(x,y+5);
+	printf("#+#    #+# #+#    #+# #+#     #+#     ");
+	gotoxy(x,y+6);
+	printf("#########   ########  ###     ### ### 	");
+	Sleep(1500);
+	system("cls");
+}
 // Função para mostrar nome e pontuação na parte superior do jogo
 void topBar(){
 	int i,y;
 	colorir(11,0);
-	for( i=0; i < 35; i++ ){
-		gotoxy(50+i,2);
+	for( i=0; i < 56; i++ ){
+		gotoxy(5+i,35);
 		printf("*");
-		for( y=1; y <= 10; y++ ){
-			gotoxy(50,2+y);
+		for( y=1; y <= 2; y++ ){
+			gotoxy(5,35+y);
 			printf("*");
-			gotoxy(84,2+y);
+			gotoxy(60,35+y);
 			printf("*");
 		}
-		gotoxy(50+i,13);
+		gotoxy(5+i,37);
 		printf("*");
 	}
+
 	colorir(14,0);
-	gotoxy(52,3);
+	gotoxy(7,36);
 	printf("Nome: ");colorir(11,0);printf("%s",jogador.nomeUsuario);colorir(14,0);
-	gotoxy(52,5);
+	gotoxy(20,36);
+	printf("          ");
+	gotoxy(20,36);
 	printf("Pontos:");colorir(11,0);printf(" %d",jogador.pontos);colorir(14,0);
 	// Gambiarra para desbugar
-	gotoxy(52,7);
-	puts("                         ");
-	gotoxy(52,7);
-	printf("Vidas: ");pg_Vidas();
-	gotoxy(52,9);
-	printf("Chave:");colorir(11,0);printf(" %d | 1",chave);colorir(14,0);
-	gotoxy(52,11);
-	printf("Porta:");colorir(11,0);printf(" %d | 1",porta);colorir(14,0);
+	//gotoxy(30,40);
+	//puts("     ");
+	gotoxy(33,36);
+	printf("Vidas:");colorir(11,0);printf(" %d",jogador.vidas);colorir(14,0);
+	gotoxy(42,36);
+	printf("Chave:");colorir(11,0);printf(" %d",chave);colorir(14,0);
+	gotoxy(51,36);
+	printf("Porta:");colorir(11,0);printf(" %d",porta);colorir(14,0);
 }
 // Função para mostrar as perguntas
 void v_perguntas(char operacao){
+	int f,y;
+	colorir(11,0);
+	for( f=0; f < 35; f++ ){
+		gotoxy(44+f,13);
+		printf("*");
+		for( y=1; y <= 9; y++ ){
+			gotoxy(44,13+y);
+			printf("*");
+			gotoxy(78,13+y);
+			printf("*");
+		}
+		gotoxy(44+f,23);
+		printf("*");
+	}
+	gotoxy(45,14);
+	colorir(14,0);
+	printf("        P E R G U N T A ");
+	gotoxy(44,15);
+	colorir(11,0);
+	printf("**********************************");
+	
+	gotoxy(45,19);
+	colorir(11,0);
+	printf("**********************************");
+	gotoxy(45,20);
+	colorir(14,0);
+	printf("        R E S U L T A D O ");
+	gotoxy(44,21);
+	colorir(11,0);
+	printf("**********************************");
+	
 	float soma = 0;
 	float resultado = 0;
 	int i = 0;
@@ -326,8 +572,9 @@ void v_perguntas(char operacao){
 		valor1 = aleatorio(10);
 		valor2 = aleatorio(10);
 	
-		gotoxy(60,15
+		gotoxy(59,17
 		);
+		colorir(14,0);
 		printf("%d %c %d",valor1,operacao,valor2);
 		
 		if(operacao == '+'){
@@ -340,79 +587,99 @@ void v_perguntas(char operacao){
 			soma = valor1 / valor2;
 		}
 		colorir(11,0);
-		gotoxy(60,16);
-		printf("Resultado: ");
+		gotoxy(64,24);
+		printf("");
 		colorir(14,0);
+		
 		//scanf("%f",&resultado);
 		
-		resultado = mascaraNumerica(69,16,4);
+		resultado = mascaraNumerica(60,22,4);
 		
-		gotoxy(60,16);
+		gotoxy(59,17);
 		printf("               ");
-		gotoxy(60,15);
+		gotoxy(59,22);
 		printf("               ");
 		
 		// Pontos
 		if(resultado == soma){
 			jogador.pontos += 2;
 			topBar();
+			LimpaTelaDesenho();
+			AcertoMiseravi();
+			Sleep(500);
+			LimpaTelaDesenho();
 		}
 		else {
-			jogador.pontos -= 1;
-			jogador.vidas -= 1;
-			topBar();
+			if(jogador.vidas < 1){
+				sairMaster = 1;
+				salvaSecsao();
+				break;
+			}
+			else {
+				if(jogador.pontos>0){
+					jogador.pontos -= 1;
+				}
+				jogador.vidas -= 1;
+				topBar();
+				LimpaTelaDesenho();
+				ERRRRRRROUU();
+				Sleep(500);
+				LimpaTelaDesenho();
+			}			
 		}
-	}while(resultado != soma);	
+	}while(resultado != soma );	
 }
 void tabuleiro(char matriz [5][5]){
-	gotoxy(4,25);
+	gotoxy(4,40);
 	colorir(14,4);
 	printf("AVISO:");
 	colorir(14,0);
 	printf(" Pressione ESC para voltar ao menu");
-
+	logo();
+                                                            
+	
 	colorir(11,0);
-	gotoxy(4,3);
-	printf ("\t###############################\n");
-	gotoxy(4,4);
-	printf ("\t#     |     |     |     |     #\n");
-	gotoxy(4,5);
-	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[0][0],matriz[0][1],matriz[0][2],matriz[0][3],matriz[0][4]);
-	gotoxy(4,6);
-	printf ("\t#     |     |     |     |     #\n");
-	gotoxy(4,7);
-	printf ("\t###############################\n");
-	gotoxy(4,8);
-	printf ("\t#     |     |     |     |     #\n");
-	gotoxy(4,9);
-	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[1][0],matriz[1][1],matriz[1][2],matriz[1][3],matriz[1][4]);
-	gotoxy(4,10);
-	printf ("\t#     |     |     |     |     #\n");
-	gotoxy(4,11);
-	printf ("\t###############################\n");
-	gotoxy(4,12);
-	printf ("\t#     |     |     |     |     #\n");
 	gotoxy(4,13);
-	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[2][0],matriz[2][1],matriz[2][2],matriz[2][3],matriz[2][4]);
+	printf ("\t###############################\n");
 	gotoxy(4,14);
 	printf ("\t#     |     |     |     |     #\n");
 	gotoxy(4,15);
-	printf ("\t###############################\n");
+	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[0][0],matriz[0][1],matriz[0][2],matriz[0][3],matriz[0][4]);
 	gotoxy(4,16);
 	printf ("\t#     |     |     |     |     #\n");
 	gotoxy(4,17);
-	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[3][0],matriz[3][1],matriz[3][2],matriz[3][3],matriz[3][4]);
+	printf ("\t###############################\n");
 	gotoxy(4,18);
 	printf ("\t#     |     |     |     |     #\n");
 	gotoxy(4,19);
-	printf ("\t###############################\n");
+	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[1][0],matriz[1][1],matriz[1][2],matriz[1][3],matriz[1][4]);
 	gotoxy(4,20);
 	printf ("\t#     |     |     |     |     #\n");
 	gotoxy(4,21);
-	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[4][0],matriz[4][1],matriz[4][2],matriz[4][3],matriz[4][4]);
+	printf ("\t###############################\n");
 	gotoxy(4,22);
 	printf ("\t#     |     |     |     |     #\n");
 	gotoxy(4,23);
+	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[2][0],matriz[2][1],matriz[2][2],matriz[2][3],matriz[2][4]);
+	gotoxy(4,24);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,25);
+	printf ("\t###############################\n");
+	gotoxy(4,26);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,27);
+	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[3][0],matriz[3][1],matriz[3][2],matriz[3][3],matriz[3][4]);
+	gotoxy(4,28);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,29);
+	printf ("\t###############################\n");
+	gotoxy(4,30);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,31);
+	printf ("\t# %c   | %c   | %c   | %c   | %c   # \n",matriz[4][0],matriz[4][1],matriz[4][2],matriz[4][3],matriz[4][4]);
+	gotoxy(4,32);
+	printf ("\t#     |     |     |     |     #\n");
+	gotoxy(4,33);
 	printf ("\t###############################\n");
 } 
 void movimenta(int x, int y){
@@ -420,11 +687,15 @@ void movimenta(int x, int y){
 	tabuleiro(matriz);
 	
 }
-void chaveEPorta(int x, int y){	
+int chaveEPorta(int x, int y,int nivel){	
+	int retorno = 0;
 	if(x==chaveX && y==chaveY){
 		if(chave==0){
 			chave+=1;
 			topBar();
+			TelaChave();
+			Sleep(800);
+			LimpaTelaDesenho();
 			}
 	}
 	if(x==portaX && y==portaY){
@@ -434,8 +705,13 @@ void chaveEPorta(int x, int y){
 			}
 		if(chave==1){
 			//gotoxy(0,0);printf("Entrou");
+			salvaSecsao();
+			boa();
+			retorno = 3;
+			nivel++;
 		}
 	}
+	return retorno;
 }
 void perguntas(int nivel){
 	if(nivel==1){
@@ -449,6 +725,8 @@ void perguntas(int nivel){
 	}
 }
 void jogar(int nivel){
+	//Gambi
+	sairMaster = 0;
 	// Barra de progresso
 	loading();
 	
@@ -484,17 +762,30 @@ void jogar(int nivel){
 	int y = 4;
 	char casas [5][5];
 	int i , n;
+	zeraMatriz();
 	for(i = 0; i < MAX_MATRIZ; i++){
 		for(n = 0; n < MAX_MATRIZ; n++){
-			casas[i][n]=' ';
+			casas[i][n]='X';
 		}
 	}
 	casas[x][y]='C';
+	molduraJogo();
 	tabuleiro(casas);
 	
 	char tecla;
 	int TCPressionada, sair = 0;
-	while(1 && sair!=3){
+	while(1 && sair!=3 ){
+		if(sairMaster == 1){
+			jogador.pontos = 0;
+			system("cls");
+			moldura();
+			game_over();
+			Sleep(1500);
+			system("cls");
+			logo();
+			moldura();
+			break;
+		}
 		tecla = getch();
 		TCPressionada = tecla;
 		switch(TCPressionada){
@@ -504,91 +795,95 @@ void jogar(int nivel){
 						matriz[x][y] = 'P';
 					}
 					else {
-						matriz[x][y] = 'X';	
+						matriz[x][y] = ' ';	
 					}
 					y -= 1;
 					if ((y < 0) || (y > 4)){
 						y += 1;
 					}
-					if(matriz[x][y]=='X' || matriz[x][y]=='P'){
+					if(matriz[x][y]==' ' || matriz[x][y]=='P'){
 						movimenta(x,y);	
 					}
 					else {
 						perguntas(nivel);
 						movimenta(x,y);
 					}
-					chaveEPorta(x,y);
+					sair = chaveEPorta(x,y,nivel);
 					break;
 				case 72:
 					if( x==portaX && y==portaY ){
 						matriz[x][y] = 'P';
 					}
 					else {
-						matriz[x][y] = 'X';	
+						matriz[x][y] = ' ';	
 					}
 					x -= 1;
 					if ((x < 0 ) || (x > 4)){
 						x += 1;
 						
 					}
-					if(matriz[x][y]=='X' || matriz[x][y]=='P'){
+					if(matriz[x][y]==' ' || matriz[x][y]=='P'){
 						movimenta(x,y);	
 					}
 					else {
 						perguntas(nivel);
 						movimenta(x,y);
 					}
-					chaveEPorta(x,y);
+					sair = chaveEPorta(x,y,nivel);
 					break;
 				case 77:
 					if(x==portaX && y==portaY){
 						matriz[x][y] = 'P';
 					}
 					else {
-						matriz[x][y] = 'X';	
+						matriz[x][y] = ' ';	
 					}
 					y += 1;
 					if ((y < 0) || (y > 4)){
 						y -= 1;
 						
 					}
-					if(matriz[x][y]=='X' || matriz[x][y]=='P'){
+					if(matriz[x][y]==' ' || matriz[x][y]=='P'){
 						movimenta(x,y);	
 					}
 					else {
 						perguntas(nivel);
 						movimenta(x,y);
 					}
-					chaveEPorta(x,y);
+					sair = chaveEPorta(x,y,nivel);
 					break;
 				case 80:
 					if( x==portaX && y==portaY ){
 						matriz[x][y] = 'P';
 					}
 					else {
-						matriz[x][y] = 'X';	
+						matriz[x][y] = ' ';	
 					}
 					x += 1;
 					if ((x < 0 ) || (x > 4)){
 						x -= 1;
 					}
-					if(matriz[x][y]=='X' || matriz[x][y]=='P'){
+					if(matriz[x][y]==' ' || matriz[x][y]=='P'){
 						movimenta(x,y);	
 					}
 					else {
 						perguntas(nivel);
 						movimenta(x,y);
 					}
-					chaveEPorta(x,y);
+					sair = chaveEPorta(x,y,nivel);
 					break;
 				case 27:{
-					zeraMatriz();
+					jogador.pontos = 0;
 					sair=3;
-					system("cls");
-					logo();
-					moldura();
 					break;
 				}
+		}
+		if(sair==3 ){
+			sair = 3;
+			zeraMatriz();
+			system("cls");
+			logo();
+			moldura();
 		}	
 	}
 }
@@ -729,7 +1024,6 @@ int listarUsuario(char user[15], char password[99]){
 			strcpy(jogador.nomeUsuario,nome);
 			strcpy(jogador.senha,senha);
 			valor =  1;
-			jogador.pontos = atoi(vPontos);
 		//	pontos = vPontos;
 			break;
 		}
@@ -883,6 +1177,7 @@ void telaLogin(){
 					if(valor==1){
 						system("cls");
 						// abrir o jogo
+						jogador.pontos = 0;
 						menuSecundario();
 					}
 					else {
