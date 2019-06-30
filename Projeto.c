@@ -750,10 +750,10 @@ void jogar(int nivel){
 		portaX = aleatorio(MAX_MATRIZ);
 		portaY = aleatorio(MAX_MATRIZ);
 	}
-	/*
+	
 	gotoxy(0,0);
-	printf("Chave: [%d][%d] Porta: [%d][%d]",chaveX,chaveY,portaX,portaY); // teste para saber onde estão nascendo chave e porta
-	*/
+	printf("Chave: [%d][%d] Porta: [%d][%d]",chaveX+1,chaveY+1,portaX+1,portaY+1); // teste para saber onde estão nascendo chave e porta
+	
 	jogador.vidas = MAX_VIDAS;
 	chave = 0;
 	porta = 0;
@@ -1340,7 +1340,7 @@ void menuPrincipal(){
 	int pos=1;
 	gotoxy(35,13);
 	colorir(11,0);
-	printf(">> Cadastrar");
+	printf(">> Cadastrar Jogador");
 	colorir(14,0);
 	gotoxy(35,14);
 	printf("Entrar   ");
@@ -1396,7 +1396,7 @@ void menuPrincipal(){
 			limpaTela();
 			gotoxy(35,13);
 			colorir(11,0);
-			printf(">> Cadastrar");
+			printf(">> Cadastrar Jogador");
 			colorir(14,0);
 			gotoxy(35,14);
 			printf("Entrar   ");
@@ -1407,7 +1407,7 @@ void menuPrincipal(){
 		{
 			limpaTela();
 			gotoxy(35,13);
-			printf("Cadastrar   ");
+			printf("Cadastrar Jogador   ");
 			gotoxy(35,14);
 			colorir(11,0);
 			printf(">> Entrar");
@@ -1419,7 +1419,7 @@ void menuPrincipal(){
 		{
 			limpaTela();
 			gotoxy(35,13);
-			printf("Cadastrar   ");
+			printf("Cadastrar Jogador   ");
 			gotoxy(35,14);
 			printf("Entrar   ");
 			gotoxy(35,15);
@@ -1432,7 +1432,8 @@ void menuPrincipal(){
 }
 int main()
 {	
-	system("MODE CON: COLS=100 LINES=100");
+	//system("MODE CON: COLS=100 LINES=100");
+	system("MODE CON: COLS=100 LINES=200");
 	setlocale(LC_ALL, "Portuguese");
 	menuPrincipal();
 	return 0;
