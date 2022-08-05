@@ -70,7 +70,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Auth"
+                  "$ref" : "#/components/responses/Auth"
                 }
               }
             }
@@ -80,7 +80,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Unauthorized"
+                  "$ref" : "#/components/schemas/inline_response_401"
                 }
               }
             }
@@ -98,7 +98,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Auth"
+                  "$ref" : "#/components/schemas/inline_response_200"
                 }
               }
             }
@@ -108,7 +108,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Unauthorized"
+                  "$ref" : "#/components/schemas/inline_response_401"
                 }
               }
             }
@@ -137,7 +137,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Unauthorized"
+                  "$ref" : "#/components/schemas/inline_response_401"
                 }
               }
             }
@@ -214,7 +214,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Unauthorized"
+                  "$ref" : "#/components/schemas/inline_response_401"
                 }
               }
             }
@@ -299,7 +299,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Unauthorized"
+                  "$ref" : "#/components/schemas/inline_response_401"
                 }
               }
             }
@@ -377,36 +377,6 @@
           }
         }
       },
-      "Auth" : {
-        "type" : "object",
-        "properties" : {
-          "access_token" : {
-            "type" : "string",
-            "example" : "token example"
-          },
-          "token_type" : {
-            "type" : "string",
-            "example" : "bearer"
-          },
-          "expires_in" : {
-            "type" : "integer",
-            "example" : 0
-          }
-        }
-      },
-      "Unauthorized" : {
-        "type" : "object",
-        "properties" : {
-          "message" : {
-            "type" : "string",
-            "example" : "Not authorized. Authentication required"
-          },
-          "code" : {
-            "type" : "string",
-            "example" : "HTTP_UNAUTHORIZE"
-          }
-        }
-      },
       "User" : {
         "required" : [ "accept_terms", "email", "name", "password" ],
         "type" : "object",
@@ -480,6 +450,36 @@
           }
         }
       },
+      "inline_response_401" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "example" : "Not authorized. Authentication required"
+          },
+          "code" : {
+            "type" : "string",
+            "example" : "HTTP_UNAUTHORIZE"
+          }
+        }
+      },
+      "inline_response_200" : {
+        "type" : "object",
+        "properties" : {
+          "access_token" : {
+            "type" : "string",
+            "example" : "token example"
+          },
+          "token_type" : {
+            "type" : "string",
+            "example" : "bearer"
+          },
+          "expires_in" : {
+            "type" : "integer",
+            "example" : 0
+          }
+        }
+      },
       "users_userId_body" : {
         "type" : "object",
         "properties" : {
@@ -550,7 +550,7 @@
         "content" : {
           "application/json" : {
             "schema" : {
-              "$ref" : "#/components/schemas/Unauthorized"
+              "$ref" : "#/components/schemas/inline_response_401"
             }
           }
         }
@@ -561,6 +561,16 @@
           "application/json" : {
             "schema" : {
               "$ref" : "#/components/schemas/inline_response_404"
+            }
+          }
+        }
+      },
+      "Auth" : {
+        "description" : "Successful operation",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200"
             }
           }
         }
