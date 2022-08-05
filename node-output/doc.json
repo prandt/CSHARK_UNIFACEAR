@@ -1,0 +1,577 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Pruvo API",
+    "description" : "Adicionar descrição depois",
+    "contact" : {
+      "email" : "dev@pruvo.app"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://test-api.pruvo.app/api"
+  } ],
+  "tags" : [ {
+    "name" : "Auth"
+  }, {
+    "name" : "Users"
+  }, {
+    "name" : "Organizations"
+  } ],
+  "paths" : {
+    "/auth/oauth/google" : {
+      "get" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Login with Google",
+        "responses" : {
+          "200" : {
+            "description" : "Default error sample response",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "sucess" : {
+                    "value" : "{}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Login with email and password",
+        "parameters" : [ {
+          "name" : "email",
+          "in" : "query",
+          "description" : "User email",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "query",
+          "description" : "User password",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Auth"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Refresh user token",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Auth"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/auth/logout" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Logout user",
+        "responses" : {
+          "204" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "example" : { }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/auth/me" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Get user information",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserInformation"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/users" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "List users",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number",
+            "default" : 1
+          }
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "description" : "Per page",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number",
+            "default" : 25
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "Success" : {
+                    "value" : "items[]"
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Create an user",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            },
+            "text/plain" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserInformation"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/users/{userId}" : {
+      "patch" : {
+        "tags" : [ "Users" ],
+        "summary" : "Update an user",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/users_userId_body"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserInformation"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/organizations" : {
+      "get" : {
+        "tags" : [ "Organizations" ],
+        "summary" : "List organizations",
+        "responses" : {
+          "200" : {
+            "description" : "Default error sample response",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "success" : {
+                    "value" : "{}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "UserInformation" : {
+        "type" : "object",
+        "properties" : {
+          "success" : {
+            "type" : "boolean"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/UserInformation_data"
+          },
+          "metadata" : {
+            "$ref" : "#/components/schemas/Metadata"
+          }
+        }
+      },
+      "Metadata" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "createTime" : {
+            "type" : "string"
+          },
+          "updateTime" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Auth" : {
+        "type" : "object",
+        "properties" : {
+          "access_token" : {
+            "type" : "string",
+            "example" : "token example"
+          },
+          "token_type" : {
+            "type" : "string",
+            "example" : "bearer"
+          },
+          "expires_in" : {
+            "type" : "integer",
+            "example" : 0
+          }
+        }
+      },
+      "Unauthorized" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "example" : "Not authorized. Authentication required"
+          },
+          "code" : {
+            "type" : "string",
+            "example" : "HTTP_UNAUTHORIZE"
+          }
+        }
+      },
+      "User" : {
+        "required" : [ "accept_terms", "email", "name", "password" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "example" : "Fulano de tal"
+          },
+          "email" : {
+            "type" : "string",
+            "example" : "fulano.de.tal@gmail.com"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "zxzx1212"
+          },
+          "accept_terms" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "avatar" : {
+            "type" : "string",
+            "example" : "example.com/avatar.jpg"
+          }
+        }
+      },
+      "Organization" : {
+        "type" : "object",
+        "properties" : {
+          "address" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "domains" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "example" : "example.com"
+            }
+          },
+          "billing" : {
+            "$ref" : "#/components/schemas/Organization_billing"
+          }
+        }
+      },
+      "Address" : {
+        "type" : "object",
+        "properties" : {
+          "number" : {
+            "type" : "string"
+          },
+          "additional" : {
+            "type" : "string"
+          },
+          "street" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          },
+          "zip" : {
+            "type" : "string"
+          },
+          "neiborhood" : {
+            "type" : "string"
+          },
+          "state" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          }
+        }
+      },
+      "users_userId_body" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "inline_response_404" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "example" : "Not Found! This resource does not exists."
+          }
+        }
+      },
+      "UserInformation_data" : {
+        "type" : "object",
+        "properties" : {
+          "is_super_admin" : {
+            "type" : "boolean"
+          },
+          "google" : {
+            "type" : "object"
+          },
+          "email_verified_at" : {
+            "type" : "string"
+          },
+          "avatar" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "classroom_not_imported_courses" : {
+            "type" : "object"
+          }
+        },
+        "example" : null
+      },
+      "Organization_billing" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          }
+        },
+        "example" : null
+      }
+    },
+    "responses" : {
+      "UserInformation" : {
+        "description" : "Successful operation",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/UserInformation"
+            }
+          }
+        }
+      },
+      "Unauthorized" : {
+        "description" : "Unauthorized",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Unauthorized"
+            }
+          }
+        }
+      },
+      "NotFound" : {
+        "description" : "Not Found",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_404"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  }
+}
