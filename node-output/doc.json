@@ -70,7 +70,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/responses/Auth"
+                  "$ref" : "#/components/schemas/inline_response_200"
                 }
               }
             }
@@ -198,13 +198,11 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "Success",
+            "description" : "Successful operation",
             "content" : {
               "application/json" : {
-                "examples" : {
-                  "Success" : {
-                    "value" : "items[]"
-                  }
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
                 }
               }
             }
@@ -403,9 +401,26 @@
           }
         }
       },
+      "Company" : {
+        "type" : "object",
+        "properties" : {
+          "document" : {
+            "$ref" : "#/components/schemas/Company_document"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/Company_name"
+          },
+          "segment" : {
+            "type" : "string"
+          }
+        }
+      },
       "Organization" : {
         "type" : "object",
         "properties" : {
+          "company" : {
+            "$ref" : "#/components/schemas/Company"
+          },
           "address" : {
             "$ref" : "#/components/schemas/Address"
           },
@@ -419,6 +434,12 @@
           "billing" : {
             "$ref" : "#/components/schemas/Organization_billing"
           }
+        }
+      },
+      "Acl" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Acl_inner"
         }
       },
       "Address" : {
@@ -450,19 +471,6 @@
           }
         }
       },
-      "inline_response_401" : {
-        "type" : "object",
-        "properties" : {
-          "message" : {
-            "type" : "string",
-            "example" : "Not authorized. Authentication required"
-          },
-          "code" : {
-            "type" : "string",
-            "example" : "HTTP_UNAUTHORIZE"
-          }
-        }
-      },
       "inline_response_200" : {
         "type" : "object",
         "properties" : {
@@ -477,6 +485,30 @@
           "expires_in" : {
             "type" : "integer",
             "example" : 0
+          }
+        }
+      },
+      "inline_response_401" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "example" : "Not authorized. Authentication required"
+          },
+          "code" : {
+            "type" : "string",
+            "example" : "HTTP_UNAUTHORIZE"
+          }
+        }
+      },
+      "inline_response_200_1" : {
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_1_items"
+            }
           }
         }
       },
@@ -524,11 +556,157 @@
         },
         "example" : null
       },
+      "Company_document" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          }
+        },
+        "example" : null
+      },
+      "Company_name" : {
+        "type" : "object",
+        "properties" : {
+          "trade" : {
+            "type" : "string"
+          },
+          "legal" : {
+            "type" : "string"
+          }
+        },
+        "example" : null
+      },
       "Organization_billing" : {
         "type" : "object",
         "properties" : {
           "email" : {
             "type" : "string"
+          }
+        },
+        "example" : null
+      },
+      "Acl_inner" : {
+        "type" : "object",
+        "properties" : {
+          "group" : {
+            "type" : "string"
+          },
+          "ability" : {
+            "type" : "string"
+          },
+          "visible" : {
+            "type" : "boolean"
+          },
+          "allowed_roles" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "roles" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "inline_response_200_1_data_google" : {
+        "type" : "object",
+        "properties" : {
+          "avatar" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "email_verified" : {
+            "type" : "boolean"
+          },
+          "family_name" : {
+            "type" : "string"
+          },
+          "given_name" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "locale" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "example" : null
+      },
+      "inline_response_200_1_data_users" : {
+        "type" : "object",
+        "properties" : {
+          "updated_at" : {
+            "type" : "string"
+          }
+        },
+        "example" : null
+      },
+      "inline_response_200_1_data" : {
+        "type" : "object",
+        "properties" : {
+          "avatar" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "email_verified_at" : {
+            "type" : "string"
+          },
+          "google" : {
+            "$ref" : "#/components/schemas/inline_response_200_1_data_google"
+          },
+          "is_super_admin" : {
+            "type" : "boolean"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "users" : {
+            "$ref" : "#/components/schemas/inline_response_200_1_data_users"
+          }
+        },
+        "example" : null
+      },
+      "inline_response_200_1_permissions" : {
+        "type" : "object",
+        "properties" : {
+          "get" : {
+            "type" : "boolean"
+          },
+          "update" : {
+            "type" : "boolean"
+          },
+          "delete" : {
+            "type" : "boolean"
+          }
+        },
+        "example" : null
+      },
+      "inline_response_200_1_items" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_1_data"
+          },
+          "metadata" : {
+            "$ref" : "#/components/schemas/Metadata"
+          },
+          "permissions" : {
+            "$ref" : "#/components/schemas/inline_response_200_1_permissions"
           }
         },
         "example" : null
@@ -571,6 +749,16 @@
           "application/json" : {
             "schema" : {
               "$ref" : "#/components/schemas/inline_response_200"
+            }
+          }
+        }
+      },
+      "UserList" : {
+        "description" : "Successful operation",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_1"
             }
           }
         }
